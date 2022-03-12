@@ -29,7 +29,7 @@ class SettingsTile extends StatelessWidget {
                 ),
                 Text(
                   text,
-                  style:const TextStyle(fontFamily: "Poppins", fontSize: 22),
+                  style:const TextStyle(fontFamily: "Poppins", fontSize: 21),
                 )
               ],
             ),

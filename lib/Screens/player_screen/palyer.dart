@@ -23,6 +23,9 @@ class PlayerScreen extends StatelessWidget {
               // ignore: prefer_const_constructors
               betterPlayerConfiguration: BetterPlayerConfiguration(
                 aspectRatio: 16 / 9,
+                autoPlay: true,
+                fullScreenByDefault: true,
+                looping: true
               ),
             ),
           ),

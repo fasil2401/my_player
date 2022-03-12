@@ -41,8 +41,8 @@ class CustomListTileVideos extends StatelessWidget {
               Row(
                 children: [
                   Container(
-                    width: MediaQuery.of(context).size.width * 0.22,
-                    height: MediaQuery.of(context).size.width * 0.14,
+                    width: MediaQuery.of(context).size.width * 0.20,
+                    height: MediaQuery.of(context).size.width * 0.13,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(6.0),
                       image: DecorationImage(
@@ -74,7 +74,7 @@ class CustomListTileVideos extends StatelessWidget {
                         text,
                         style: TextStyle(
                           fontFamily: "Poppins",
-                          fontSize: MediaQuery.of(context).size.width * 0.05,
+                          fontSize: MediaQuery.of(context).size.width * 0.046,
                         ),
                       ),
                       Visibility(

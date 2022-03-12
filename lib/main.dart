@@ -43,7 +43,7 @@ class MyApp extends StatelessWidget {
           
       themeMode: themeProvider.themeMode,
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
+      title: 'My Player',
       theme: MyThemes.lightTheme,
       darkTheme: MyThemes.darkTheme,
       home:const SplashScreen(),

@@ -36,7 +36,8 @@ class BottomNavigation extends StatelessWidget {
         tabIcon[tabItem],
         // color: Colors.grey,
       ),
-      label:  '',
+      label:  tabName[tabItem
+      ],
     );
   }
 }

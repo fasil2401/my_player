@@ -8,10 +8,10 @@ import 'package:my_player/icons/my_flutter_app_icons.dart';
 enum TabItem { folder, allVideos, favorite, settings }
 
 Map<TabItem, String> tabName = {
-  TabItem.folder: 'folder',
-  TabItem.allVideos: 'all',
-  TabItem.favorite: 'favorite',
-  TabItem.settings: 'settings',
+  TabItem.folder: 'Folder',
+  TabItem.allVideos: 'All Videos',
+  TabItem.favorite: 'Favorite',
+  TabItem.settings: 'Settings',
 };
 Map<TabItem, IconData> tabIcon = {
   TabItem.folder: MyFlutterApp.folder_1,

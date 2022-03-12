@@ -34,11 +34,11 @@ class TabNavigator extends StatelessWidget {
       //       onPush: (materialIndex) =>
       //           _push(context, materialIndex: materialIndex),
       //     ),
-      TabNavigatorRoutes.detail: (context) => ColorDetailsPage(
-            color: activeTabColor[tabItem]!,
-            title: tabName[tabItem]!,
-            materialIndex: materialIndex,
-          ),
+      // TabNavigatorRoutes.detail: (context) => ColorDetailsPage(
+      //       color: activeTabColor[tabItem]!,
+      //       title: tabName[tabItem]!,
+      //       materialIndex: materialIndex,
+      //     ),
     };
   }
 

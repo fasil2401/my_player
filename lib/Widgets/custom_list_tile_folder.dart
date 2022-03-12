@@ -55,7 +55,7 @@ class CustomListTileFolder extends StatelessWidget {
                         style: TextStyle(
                           fontFamily: "Poppins",
                           fontSize:
-                              MediaQuery.of(context).size.width * 0.05,
+                              MediaQuery.of(context).size.width * 0.047,
                         ),
                       ),
                       Visibility(

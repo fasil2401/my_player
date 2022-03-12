@@ -25,7 +25,8 @@ class MyThemes {
     backgroundColor: const Color.fromARGB(255, 30, 30, 31),
      bottomNavigationBarTheme: BottomNavigationBarThemeData(
       unselectedIconTheme:  IconThemeData(color: Colors.purple.shade200, opacity: 0.8),
-      selectedIconTheme: IconThemeData(color: Colors.purple),
+      selectedIconTheme:const IconThemeData(color: Colors.purple),
+      backgroundColor: Colors.red
     )
   );
   static final lightTheme = ThemeData(
@@ -38,11 +39,12 @@ class MyThemes {
     textTheme:const TextTheme(),
     appBarTheme:const AppBarTheme(
       backgroundColor:  Color(0xFF100374) ,
-      
+  
     ),
     bottomNavigationBarTheme:const BottomNavigationBarThemeData(
       unselectedIconTheme:  IconThemeData(color: Color(0xFF837DAB)),
       selectedIconTheme: IconThemeData(color: Color(0xFF100374)),
+      backgroundColor: Colors.grey
     )
   );
 }
