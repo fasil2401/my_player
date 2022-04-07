@@ -13,7 +13,11 @@ class CustomListTileVideos extends StatelessWidget {
       required this.trailicon,
       required this.index,
       required this.text,
-      required this.url})
+      required this.url,
+       required this.folderName,
+      required this.pathList
+      
+      })
       : super(key: key);
 
   final bool subtite;
@@ -21,6 +25,9 @@ class CustomListTileVideos extends StatelessWidget {
   final int index;
   final String text;
   final String url;
+   final String folderName;
+List<String>pathList = [];
+List<String>viewList = [];
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -28,7 +35,7 @@ class CustomListTileVideos extends StatelessWidget {
       child: GestureDetector(
         onTap: () {
           Navigator.of(context).push(
-              MaterialPageRoute(builder: (context) => const PlayerScreen()));
+              MaterialPageRoute(builder: (context) =>  PlayerScreen(path: pathList[index],)));
         },
         child: SizedBox(
           // color: Colors.grey,
@@ -44,9 +51,10 @@ class CustomListTileVideos extends StatelessWidget {
                     width: MediaQuery.of(context).size.width * 0.20,
                     height: MediaQuery.of(context).size.width * 0.13,
                     decoration: BoxDecoration(
+                      color: Colors.grey,
                       borderRadius: BorderRadius.circular(6.0),
-                      image: DecorationImage(
-                          fit: BoxFit.fill, image: NetworkImage(url)),
+                      // image: DecorationImage(
+                      //     fit: BoxFit.fill, image: NetworkImage(url)),
                     ),
                   ),
                   // SizedBox(
@@ -70,11 +78,16 @@ class CustomListTileVideos extends StatelessWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        text,
-                        style: TextStyle(
-                          fontFamily: "Poppins",
-                          fontSize: MediaQuery.of(context).size.width * 0.046,
+                      Container(
+                        width: MediaQuery.of(context).size.width * 0.50,
+                        child: Text(
+                          text,
+                          overflow: TextOverflow.clip,
+                          maxLines: 3,
+                          style: TextStyle(
+                            fontFamily: "Poppins",
+                            fontSize: MediaQuery.of(context).size.width * 0.046,
+                          ),
                         ),
                       ),
                       Visibility(
