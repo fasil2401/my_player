@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_player/Screens/navigation_screens/widgets/tab_item.dart';
 
-
-
 class BottomNavigation extends StatelessWidget {
   const BottomNavigation(
       {Key? key, required this.currentTab, required this.onSelectTab})

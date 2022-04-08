@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:my_player/Screens/navigation_screens/widgets/bottomnavigation.dart';
 import 'package:my_player/Screens/navigation_screens/widgets/tab_item.dart';
 import 'package:my_player/Screens/navigation_screens/widgets/tab_navigator.dart';
+import 'package:my_player/main.dart';
 
 class App extends StatefulWidget {
   const App({ Key? key }) : super(key: key);
@@ -57,10 +58,15 @@ class _AppState extends State<App> {
             _buildOffstageNavigator(TabItem.settings),
           ],
         ),
-         bottomNavigationBar: BottomNavigation(
-            currentTab: _currentTab,
-            onSelectTab: _selectTab,
-          ),
+         bottomNavigationBar: Visibility(
+           
+           visible: bottomBar,
+           child: BottomNavigation(
+             
+              currentTab: _currentTab,
+              onSelectTab: _selectTab,
+            ),
+         ),
       ),
     );
   }

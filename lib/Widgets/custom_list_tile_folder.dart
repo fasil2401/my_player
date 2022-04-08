@@ -25,7 +25,7 @@ class CustomListTileFolder extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-      child: GestureDetector(
+      child: InkWell(
         onTap: () {
           Navigator.of(context).push(MaterialPageRoute(
               builder: (context) =>  VideoList(folderName: folderName, pathList: pathList)));

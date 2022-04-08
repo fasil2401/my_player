@@ -14,6 +14,8 @@ import 'package:provider/provider.dart';
 import 'Screens/navigation_screens/navigation.dart';
 
 const first_time = 'UserLogedIn';
+List<String>pathListMain = [];
+bool bottomBar = true;
 
 void main() {
  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(

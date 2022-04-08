@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_player/Widgets/custom_appbar.dart';
 import 'package:my_player/Widgets/custom_list_tile_folder.dart';
+import 'package:my_player/main.dart';
 import 'package:my_player/provider/search_files.dart';
 
 class FolderScreen extends StatefulWidget {
@@ -12,19 +13,11 @@ class FolderScreen extends StatefulWidget {
 
 class _FolderScreenState extends State<FolderScreen> {
 
+
   List<String> _pathList = [];
   List<String> folderName = [];
   List<String> folderNameFinal = [];
- final List<String>folder_names =[
-    'Android',
-    'WhatsApp',
-    'Status Saver',
-    'Movies',
-    'Songs',
-    'Personal',
-    'Works',
-    'Tesing'
-  ];
+
 
   @override
   void initState() {
@@ -55,6 +48,7 @@ Future getFiles() async {
         }
         folderNameFinal = folderName.toSet().toList();
         folderNameFinal.remove('0');
+        pathListMain= _pathList;
         });
         
       },

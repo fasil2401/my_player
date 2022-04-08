@@ -1,9 +1,10 @@
 import 'package:better_player/better_player.dart';
 import 'package:flutter/material.dart';
+import 'package:my_player/main.dart';
 
 class PlayerScreen extends StatefulWidget {
-  const PlayerScreen({Key? key, this.path}) : super(key: key);
-
+  const PlayerScreen({Key? key, this.path, required this.name}) : super(key: key);
+  final String name;
   final path;
   @override
   State<PlayerScreen> createState() => _PlayerScreenState();
@@ -32,36 +33,31 @@ class _PlayerScreenState extends State<PlayerScreen> {
   //   _betterPlayerController.setupDataSource(dataSource);
   // }
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  
+  }
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: Colors.black,
+        automaticallyImplyLeading: true,
+        title: Text(widget.name),
+      ),
       body: SafeArea(
         child: Center(
           child: AspectRatio(
+             aspectRatio: 16 / 9,
+            child: BetterPlayer.file(widget.path,
+          betterPlayerConfiguration: BetterPlayerConfiguration(
             aspectRatio: 16 / 9,
-            //  child: BetterPlayer(controller: _betterPlayerController),
-            child: BetterPlayer.file(
-              widget.path,
-              // ignore: prefer_const_constructors
-              betterPlayerConfiguration: BetterPlayerConfiguration(
-
-                  autoDetectFullscreenAspectRatio: true,
-                  
-                  // aspectRatio: 16 / 9,
-                  autoPlay: true,
-                  // fullScreenByDefault: true,
-                  looping: true),
-            ),
-            // child: BetterPlayer.network(
-            //   "https://www.appsloveworld.com/wp-content/uploads/2018/10/640.mp4 ", // ignore: prefer_const_constructors
-            //   // ignore: prefer_const_constructors
-            //   betterPlayerConfiguration: BetterPlayerConfiguration(
-            //     aspectRatio: 16 / 9,
-            //     autoPlay: true,
-            //     fullScreenByDefault: true,
-            //     looping: true
-            //   ),
-            // ),
+            looping: false
+          ),
+        ),
           ),
         ),
       ),
