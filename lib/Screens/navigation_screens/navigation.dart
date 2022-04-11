@@ -60,7 +60,7 @@ class _AppState extends State<App> {
         ),
          bottomNavigationBar: Visibility(
            
-           visible: bottomBar,
+           visible: true,
            child: BottomNavigation(
              
               currentTab: _currentTab,
