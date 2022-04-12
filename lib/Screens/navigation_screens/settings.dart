@@ -20,14 +20,22 @@ class _SettingsScreenState extends State<SettingsScreen> {
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Column(
           children: [
-            SettingsTile(leadicon: Icons.control_camera,text: 'Theme Mode',tailicon: ChangeThemeButtonWidget(),),
-            SettingsTile(leadicon: MyFlutterApp.share,text: 'Share App',),
-            SettingsTile(leadicon: MyFlutterApp.info_outline,text: 'About App',),
-            SettingsTile(leadicon: MyFlutterApp.notifications,text: 'Notifications',),
+            // SettingsTile(leadicon: Icons.control_camera,text: 'Theme Mode',tailicon: ChangeThemeButtonWidget(),),
+            SettingsTile(
+              leadicon: MyFlutterApp.share,
+              text: 'Share App',
+            ),
+            SettingsTile(
+              leadicon: MyFlutterApp.info_outline,
+              text: 'About App',
+            ),
+            SettingsTile(
+              leadicon: MyFlutterApp.notifications,
+              text: 'Notifications',
+            ),
           ],
         ),
       ),
     );
   }
 }
-

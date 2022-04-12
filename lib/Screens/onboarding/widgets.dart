@@ -9,15 +9,15 @@ final List<Map<String, String>> splashData = [
     "title": "Wolcome to the world of\nEverytainment",
     "image": "assets/images/13134-removebg-preview (1).png"
   },
-   {
+  {
     "title": "One Stop Solution for your\nMultimedia Play",
     "image": "assets/images/5870-removebg-preview (1).png"
   },
-   {
+  {
     "title": "One Stop Solution for your\nMultimedia Play",
     "image": "assets/images/5870-removebg-preview (1).png"
   },
-  
+
   // {
 
   //   "title":
@@ -25,6 +25,7 @@ final List<Map<String, String>> splashData = [
   //   "image": "assets/images/boarding3.png"
   // },
 ];
+
 SizedBox onBoardingImage(BuildContext context, int index) {
   return SizedBox(
     height: MediaQuery.of(context).size.height * .18,
@@ -39,14 +40,14 @@ SizedBox onBoardingImage(BuildContext context, int index) {
   );
 }
 
-Text onBoardingText(int index) {
+Text onBoardingText(BuildContext context, int index) {
   return Text(
     splashData[index]['title']!,
     textAlign: TextAlign.center,
-    style:const TextStyle(
+    style: TextStyle(
       fontFamily: "Poppins",
-      fontSize: 26,
-      color: Color.fromARGB(255, 37, 37, 37),
+      fontSize: MediaQuery.of(context).size.height * .03,
+      color: const Color.fromARGB(255, 37, 37, 37),
       height: 1.5,
     ),
   );

@@ -106,7 +106,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                   children: <Widget>[
                     onBoardingImage(context, index),
                     const Spacer(),
-                    onBoardingText(index),
+                    onBoardingText(context,index),
                   ],
                 );
               },
