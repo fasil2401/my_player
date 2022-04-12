@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:hive/hive.dart';
 import 'package:my_player/Screens/navigation_screens/navigation.dart';
 import 'package:my_player/Screens/onboarding/widgets.dart';
 import 'package:my_player/Screens/navigation_screens/settings.dart';
 import 'package:my_player/main.dart';
+import 'package:my_player/model/model.dart';
+import 'package:my_player/provider/search_files.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class OnBoardingScreen extends StatefulWidget {
@@ -14,6 +17,52 @@ class OnBoardingScreen extends StatefulWidget {
 }
 
 class _OnBoardingScreenState extends State<OnBoardingScreen> {
+  List<String> _pathList = [];
+
+  var boxVideos = Hive.box<Videos>(videoBox);
+  @override
+  void initState() {
+    synchronise();
+    // TODO: implement initState
+    super.initState();
+  }
+
+  void synchronise() async {
+    await getFiles();
+    // print(_pathList);
+    boxVideos.put(1,Videos(paths: _pathList));
+  }
+
+  Future getFiles() async {
+    final value = '.mp4,.mkv,.webm'
+        // final value = '.mp4'
+        .trim()
+        .replaceAll(' ', '')
+        .split(',');
+    if (value.isEmpty) {
+      return;
+    }
+    SearchFilesInStorage.searchInStorage(
+      value,
+      (List<String> data) {
+        _pathList.clear();
+        // print(data);
+        setState(() {
+          _pathList.addAll(data);
+          // for (var i = 0; i < _pathList.length; i++) {
+          //   List<String> folder = _pathList[i].split('/').toList();
+          //   String name = folder[folder.length - 2];
+          //   //  folderName.add(name);
+          // }
+          // folderNameFinal = folderName.toSet().toList();
+          // folderNameFinal.remove('0');
+          // pathListMain= _pathList;
+        });
+      },
+      (error) {},
+    );
+  }
+
   final _controller = PageController();
   int _currentPage = 0;
 
@@ -125,7 +174,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
   onBoard(BuildContext ctx) async {
     final _sharedPrefs = await SharedPreferences.getInstance();
     await _sharedPrefs.setBool(first_time, true);
-    Navigator.of(ctx).pushReplacement(
-        MaterialPageRoute(builder: (context) =>const App()));
+    Navigator.of(ctx)
+        .pushReplacement(MaterialPageRoute(builder: (context) => const App()));
   }
 }
