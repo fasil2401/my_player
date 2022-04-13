@@ -28,23 +28,22 @@ class _VideoListState extends State<VideoList> {
 
   Future getVideos() async {
     for (var i = 0; i < widget.pathList.length; i++) {
+      print('${widget.pathList[i]}');
       List<String> video = widget.pathList[i].split('/').toList();
+      print(video);
       if (video.contains(widget.folderName)) {
         String url = video.join('/');
         // String name = video[video.length-1];
-       
-          var key = (await VideoThumbnail.thumbnailData(
-              video: url,
-              imageFormat: ImageFormat.JPEG,
-              maxWidth:
-                  128,
-              quality: 25,
-            ));
-            thumbs.add(key);
-            setState(() {
-              
-            });
-             viewList.add(url);
+
+        var key = (await VideoThumbnail.thumbnailData(
+          video: url,
+          imageFormat: ImageFormat.JPEG,
+          maxWidth: 128,
+          quality: 25,
+        ));
+        thumbs.add(key);
+        setState(() {});
+        viewList.add(url);
       }
     }
   }
