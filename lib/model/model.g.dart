@@ -17,7 +17,7 @@ class VideosAdapter extends TypeAdapter<Videos> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return Videos(
-      paths: (fields[0] as List).cast<String>(),
+      paths: fields[0] as String,
     );
   }
 

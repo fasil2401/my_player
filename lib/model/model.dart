@@ -4,7 +4,7 @@ part 'model.g.dart';
 @HiveType(typeId: 0)
 class Videos extends HiveObject {
   @HiveField(0)
-  List<String> paths;
+  String paths;
 
   Videos({required this.paths});
 }

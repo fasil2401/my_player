@@ -22,16 +22,23 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
   var boxVideos = Hive.box<Videos>(videoBox);
   @override
   void initState() {
-    synchronise();
+    getFiles();
+    // synchronise();
     // TODO: implement initState
     super.initState();
   }
 
-  void synchronise() async {
-    await getFiles();
-    // print(_pathList);
-    boxVideos.put(1,Videos(paths: _pathList));
-  }
+  // void synchronise() async {
+  //   await getFiles();
+  //   // print(_pathList);
+  //   // boxVideos.put(1,Videos(paths: _pathList));
+  //   var listBox = boxVideos.values.toList();
+  //   for (var i = 0; i < _pathList.length; i++) {
+  //     print('hi ${_pathList[i]}');
+  //     boxVideos.add(Videos(paths: _pathList[i]));
+  //     print(listBox[i]);
+  //   }
+  // }
 
   Future getFiles() async {
     final value = '.mp4,.mkv,.webm'
@@ -106,7 +113,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                   children: <Widget>[
                     onBoardingImage(context, index),
                     const Spacer(),
-                    onBoardingText(context,index),
+                    onBoardingText(context, index),
                   ],
                 );
               },
@@ -154,6 +161,14 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                 duration: const Duration(milliseconds: 200),
                 curve: Curves.easeIn,
               );
+        print(_pathList);
+        // var listBox = boxVideos.values.toList();
+        for (var i = 0; i < _pathList.length; i++) {
+          print('hi ${_pathList[i]}');
+          boxVideos.put(i, Videos(paths: _pathList[i]));
+
+          // print(listBox[i]);
+        }
       },
       child: Text(
         _currentPage + 1 == splashData.length ? 'Go to app' : 'Next',

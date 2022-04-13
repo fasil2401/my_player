@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:my_player/main.dart';
 
 class PlayerScreen extends StatefulWidget {
-  const PlayerScreen({Key? key, this.path, required this.name}) : super(key: key);
+  const PlayerScreen({Key? key, this.path, required this.name})
+      : super(key: key);
   final String name;
   final path;
   @override
@@ -36,8 +37,8 @@ class _PlayerScreenState extends State<PlayerScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-  
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,13 +52,12 @@ class _PlayerScreenState extends State<PlayerScreen> {
       body: SafeArea(
         child: Center(
           child: AspectRatio(
-             aspectRatio: 16 / 9,
-            child: BetterPlayer.file(widget.path,
-          betterPlayerConfiguration: BetterPlayerConfiguration(
             aspectRatio: 16 / 9,
-            looping: false
-          ),
-        ),
+            child: BetterPlayer.file(
+              widget.path,
+              betterPlayerConfiguration: BetterPlayerConfiguration(
+                  aspectRatio: 16 / 9, looping: false),
+            ),
           ),
         ),
       ),

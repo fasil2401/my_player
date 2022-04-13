@@ -8,20 +8,17 @@ import 'package:my_player/model/model.dart';
 import 'package:my_player/provider/search_files.dart';
 
 class FolderScreen extends StatefulWidget {
-   FolderScreen({Key? key}) : super(key: key);
+  FolderScreen({Key? key}) : super(key: key);
 
   @override
   State<FolderScreen> createState() => _FolderScreenState();
 }
 
 class _FolderScreenState extends State<FolderScreen> {
-
-
   List<String> _pathList = [];
   List<String> folderName = [];
   List<String> folderNameFinal = [];
   var boxVideos = Hive.box<Videos>(videoBox);
-
 
 //  @override
 //   void initState() {
@@ -96,7 +93,7 @@ class _FolderScreenState extends State<FolderScreen> {
 //         folderNameFinal.remove('0');
 //         pathListMain= _pathList;
 //         });
-        
+
 //       },
 //       (error) {},
 //     );
@@ -110,28 +107,31 @@ class _FolderScreenState extends State<FolderScreen> {
       body: ValueListenableBuilder(
         valueListenable: boxVideos.listenable(),
         builder: (BuildContext context, Box<Videos> value, Widget? child) {
-          List<Videos>videoPaths =value.values.toList();
-                    print('ivde aanooov  ${videoPaths[0].paths}\n');
-          List<String>pathList = videoPaths[0].paths;
-          for (var i = 0; i < pathList.length; i++) {
-            List<String> folder = _pathList[i].split('/').toList();
-            String name = folder[folder.length-2];
+          List<Videos> videoPaths = value.values.toList();
+          print('ivde aanooov  ${videoPaths}');
+
+          for (var i = 0; i < videoPaths.length; i++) {
+            // List<String> pathall = videoPaths[i].paths;
+            _pathList.add(videoPaths[i].paths);
+            List<String> folder = videoPaths[i].paths.split('/').toList();
+            String name = folder[folder.length - 2];
             folderName.add(name);
           }
           folderNameFinal = folderName.toSet().toList();
           folderNameFinal.remove('0');
 
-          return 
-            ListView.builder(
-            itemCount:  folderNameFinal.length,
-            itemBuilder: (context, index) {
-              return CustomListTileFolder( subtite: false,
-              trailicon: true,
-              index: index,
-              // text: _pathList[index].split('/').last,
-               text: folderNameFinal[index],
-               folderName: folderNameFinal[index], pathList: _pathList,);
-            });
+          return ListView.builder(
+              itemCount: folderNameFinal.length,
+              itemBuilder: (context, index) {
+                return CustomListTileFolder(
+                  subtite: false,
+                  trailicon: false,
+                  index: index,
+                  // text: _pathList[index].split('/').last,
+                  text: folderNameFinal[index],
+                  folderName: folderNameFinal[index], pathList: _pathList,
+                );
+              });
         },
         // child: ListView.builder(
         //     itemCount:  folderNameFinal.length,
@@ -147,5 +147,3 @@ class _FolderScreenState extends State<FolderScreen> {
     );
   }
 }
-
-
