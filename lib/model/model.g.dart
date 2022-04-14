@@ -18,15 +18,21 @@ class VideosAdapter extends TypeAdapter<Videos> {
     };
     return Videos(
       paths: fields[0] as String,
+      thumb: fields[1] as dynamic,
+      fav: fields[2] as bool?,
     );
   }
 
   @override
   void write(BinaryWriter writer, Videos obj) {
     writer
-      ..writeByte(1)
+      ..writeByte(3)
       ..writeByte(0)
-      ..write(obj.paths);
+      ..write(obj.paths)
+      ..writeByte(1)
+      ..write(obj.thumb)
+      ..writeByte(2)
+      ..write(obj.fav);
   }
 
   @override
@@ -52,15 +58,18 @@ class FavoritesAdapter extends TypeAdapter<Favorites> {
     };
     return Favorites(
       favorite: fields[0] as String,
+      thumb: fields[1] as dynamic,
     );
   }
 
   @override
   void write(BinaryWriter writer, Favorites obj) {
     writer
-      ..writeByte(1)
+      ..writeByte(2)
       ..writeByte(0)
-      ..write(obj.favorite);
+      ..write(obj.favorite)
+      ..writeByte(1)
+      ..write(obj.thumb);
   }
 
   @override

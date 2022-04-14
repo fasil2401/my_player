@@ -109,7 +109,6 @@ class _FolderScreenState extends State<FolderScreen> {
         builder: (BuildContext context, Box<Videos> value, Widget? child) {
           List<Videos> videoPaths = value.values.toList();
           print('ivde aanooov  ${videoPaths}');
-
           for (var i = 0; i < videoPaths.length; i++) {
             // List<String> pathall = videoPaths[i].paths;
             _pathList.add(videoPaths[i].paths);
@@ -121,28 +120,19 @@ class _FolderScreenState extends State<FolderScreen> {
           folderNameFinal.remove('0');
 
           return ListView.builder(
-              itemCount: folderNameFinal.length,
-              itemBuilder: (context, index) {
-                return CustomListTileFolder(
-                  subtite: false,
-                  trailicon: false,
-                  index: index,
-                  // text: _pathList[index].split('/').last,
-                  text: folderNameFinal[index],
-                  folderName: folderNameFinal[index], pathList: _pathList,
-                );
-              });
+            itemCount: folderNameFinal.length,
+            itemBuilder: (context, index) {
+              return CustomListTileFolder(
+                subtite: false,
+                trailicon: false,
+                index: index,
+                text: folderNameFinal[index],
+                folderName: folderNameFinal[index],
+                pathList: _pathList,
+              );
+            },
+          );
         },
-        // child: ListView.builder(
-        //     itemCount:  folderNameFinal.length,
-        //     itemBuilder: (context, index) {
-        //       return CustomListTileFolder( subtite: false,
-        //       trailicon: true,
-        //       index: index,
-        //       // text: _pathList[index].split('/').last,
-        //        text: folderNameFinal[index],
-        //        folderName: folderNameFinal[index], pathList: _pathList,);
-        //     }),
       ),
     );
   }

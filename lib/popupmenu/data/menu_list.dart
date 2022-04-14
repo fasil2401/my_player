@@ -3,18 +3,13 @@ import 'package:my_player/icons/my_flutter_app_icons.dart';
 import 'package:my_player/popupmenu/model/menu_item.dart';
 
 class MenuListItems {
+  static const List<MenuItem> itemFirst = [itemFavorite, itemShare];
 
-  static const List<MenuItem> itemFirst = [
-    itemSettings,
-    itemShare
-  ];
+  // static const List<MenuItem> itemSecond = [
+  //   itemSignOut,
+  // ];
 
-  static const List<MenuItem> itemSecond = [
-    itemSignOut,
-  ];
-
-
-  static const itemSettings = MenuItem(
+  static const itemFavorite = MenuItem(
     modeltext: 'Add to Favorites',
     icon: MyFlutterApp.heart_empty,
   );
@@ -24,8 +19,8 @@ class MenuListItems {
     icon: Icons.share,
   );
 
-  static const itemSignOut = MenuItem(
-    modeltext: 'Delete',
-    icon: MyFlutterApp.trash_empty,
-  );
+  // static const itemSignOut = MenuItem(
+  //   modeltext: 'Delete',
+  //   icon: MyFlutterApp.trash_empty,
+  // );
 }

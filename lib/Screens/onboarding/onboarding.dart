@@ -4,10 +4,13 @@ import 'package:hive/hive.dart';
 import 'package:my_player/Screens/navigation_screens/navigation.dart';
 import 'package:my_player/Screens/onboarding/widgets.dart';
 import 'package:my_player/Screens/navigation_screens/settings.dart';
+import 'package:my_player/bottom_navigation/screenhome.dart';
 import 'package:my_player/main.dart';
 import 'package:my_player/model/model.dart';
 import 'package:my_player/provider/search_files.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:video_thumbnail/video_thumbnail.dart';
 
 class OnBoardingScreen extends StatefulWidget {
   const OnBoardingScreen({Key? key}) : super(key: key);
@@ -18,7 +21,7 @@ class OnBoardingScreen extends StatefulWidget {
 
 class _OnBoardingScreenState extends State<OnBoardingScreen> {
   List<String> _pathList = [];
-
+  List thumbs = [];
   var boxVideos = Hive.box<Videos>(videoBox);
   @override
   void initState() {
@@ -41,6 +44,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
   // }
 
   Future getFiles() async {
+    // await Permission.storage.request();
     final value = '.mp4,.mkv,.webm'
         // final value = '.mp4'
         .trim()
@@ -152,23 +156,35 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
     );
   }
 
+  Future getThumb() async {
+    print(_pathList);
+    // var listBox = boxVideos.values.toList();
+    for (var i = 0; i < _pathList.length; i++) {
+      var key = (await VideoThumbnail.thumbnailData(
+        video: _pathList[i],
+        imageFormat: ImageFormat.JPEG,
+        maxWidth: 128,
+        quality: 25,
+      ));
+      thumbs.add(key);
+      setState(() {});
+      print('hi ${_pathList[i]}');
+      boxVideos.put(i, Videos(paths: _pathList[i], thumb: thumbs[i]));
+
+      // print(listBox[i]);
+    }
+  }
+
   ElevatedButton onBoardButton(BuildContext context) {
     return ElevatedButton(
-      onPressed: () {
+      onPressed: () async {
         _currentPage + 1 == splashData.length
             ? onBoard(context)
             : _controller.nextPage(
                 duration: const Duration(milliseconds: 200),
                 curve: Curves.easeIn,
               );
-        print(_pathList);
-        // var listBox = boxVideos.values.toList();
-        for (var i = 0; i < _pathList.length; i++) {
-          print('hi ${_pathList[i]}');
-          boxVideos.put(i, Videos(paths: _pathList[i]));
-
-          // print(listBox[i]);
-        }
+        if (_currentPage + 1 == splashData.length) {}
       },
       child: Text(
         _currentPage + 1 == splashData.length ? 'Go to app' : 'Next',
@@ -187,9 +203,10 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
   }
 
   onBoard(BuildContext ctx) async {
+    await getThumb();
     final _sharedPrefs = await SharedPreferences.getInstance();
     await _sharedPrefs.setBool(first_time, true);
     Navigator.of(ctx)
-        .pushReplacement(MaterialPageRoute(builder: (context) => const App()));
+        .pushReplacement(MaterialPageRoute(builder: (context) => ScreenHome()));
   }
 }

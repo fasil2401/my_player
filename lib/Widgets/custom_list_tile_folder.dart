@@ -40,13 +40,6 @@ class CustomListTileFolder extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  //   ClipRRect(
-                  //   borderRadius: BorderRadius.circular(8.0),
-                  //   child: Image.network(
-                  //     'https://www.filmibeat.com/img/2022/02/xmammootty-bheeshma-parvam-overseas-rights-1645153523.jpg.pagespeed.ic.5MkMLClsne.jpg',
-                  //     width:  MediaQuery.of(context).size.width * 0.24,
-                  //   ),
-                  // ),
                   Icon(
                     MyFlutterApp.folder_1,
                     size: MediaQuery.of(context).size.width * 0.13,

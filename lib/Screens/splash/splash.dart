@@ -3,6 +3,7 @@ import 'package:my_player/Screens/navigation_screens/navigation.dart';
 import 'package:my_player/Screens/onboarding/onboarding.dart';
 import 'package:my_player/Screens/onboarding/widgets.dart';
 import 'package:my_player/Screens/navigation_screens/settings.dart';
+import 'package:my_player/bottom_navigation/screenhome.dart';
 import 'package:my_player/main.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -58,7 +59,7 @@ class _SplashScreenState extends State<SplashScreen>{
     else {
       await Future.delayed(const Duration(seconds: 2));
       Navigator.of(context)
-          .pushReplacement(MaterialPageRoute(builder: (ctx1) =>const App()));
+          .pushReplacement(MaterialPageRoute(builder: (ctx1) => ScreenHome()));
     }
   }
 }

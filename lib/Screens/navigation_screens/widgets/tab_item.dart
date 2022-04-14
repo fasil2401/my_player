@@ -19,11 +19,11 @@ Map<TabItem, IconData> tabIcon = {
   TabItem.favorite: MyFlutterApp.heart,
   TabItem.settings: MyFlutterApp.cog_outline,
 };
-Map<TabItem, Widget> roots ={
+Map<TabItem, Widget> roots = {
   TabItem.folder: FolderScreen(),
   TabItem.allVideos: AllVideoList(),
   TabItem.favorite: FavoriteVideoList(),
-  TabItem.settings:const SettingsScreen(),
+  TabItem.settings: const SettingsScreen(),
 };
 
 Map<TabItem, MaterialColor> activeTabColor = {

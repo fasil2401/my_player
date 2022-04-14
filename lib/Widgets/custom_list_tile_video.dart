@@ -4,8 +4,11 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:hive_flutter/adapters.dart';
 import 'package:my_player/Screens/player_screen/palyer.dart';
 import 'package:my_player/icons/my_flutter_app_icons.dart';
+import 'package:my_player/main.dart';
+import 'package:my_player/model/model.dart';
 import 'package:my_player/popupmenu/data/menu_list.dart';
 import 'package:my_player/popupmenu/model/menu_item.dart';
 import 'package:path_provider/path_provider.dart';
@@ -27,7 +30,7 @@ class CustomListTileVideos extends StatefulWidget {
   final bool trailicon;
   final int index;
   final String text;
-   var url;
+  var url;
   final String folderName;
   List<String> pathList = [];
 
@@ -36,63 +39,14 @@ class CustomListTileVideos extends StatefulWidget {
 }
 
 class _CustomListTileVideosState extends State<CustomListTileVideos> {
-  String? _thumbnailFile;
+  var boxVideos = Hive.box<Videos>(videoBox);
+  var boxFavorite = Hive.box<Favorites>(favoriteBox);
 
-  String? _thumbnailUrl;
-
-  Uint8List? _thumbnailData;
   @override
   void initState() {
-    setState(() {
-      
-    });
+    setState(() {});
     super.initState();
-
-   
-    
   }
-
-  // Future<File> copyAssetFile(String assetFileName) async {
-  //   Directory tempDir = await getTemporaryDirectory();
-  //   final byteData = await rootBundle.load(assetFileName);
-
-  //   File videoThumbnailFile = File("${tempDir.path}/$assetFileName")
-  //     ..createSync(recursive: true)
-  //     ..writeAsBytesSync(byteData.buffer
-  //         .asUint8List(byteData.offsetInBytes, byteData.lengthInBytes));
-  //   return videoThumbnailFile;
-  // }
-
-  // void generateThumbnail() async {
-  //   // File videoTempFile1 = await copyAssetFile("assets/nature1.mp4");
-  //   // File videoTempFile2 = await copyAssetFile("assets/nature2.mp4");
-
-  //   _thumbnailFile = await VideoThumbnail.thumbnailFile(
-  //       video: widget.pathList[widget.index],
-  //       thumbnailPath: (await getTemporaryDirectory()).path,
-  //       imageFormat: ImageFormat.PNG);
-  //   final uint8list = await VideoThumbnail.thumbnailData(
-  //     video: widget.pathList[widget.index],
-  //     imageFormat: ImageFormat.JPEG,
-  //     maxWidth:
-  //         128, // specify the width of the thumbnail, let the height auto-scaled to keep the source aspect ratio
-  //     quality: 25,
-  //   );
-  //   _thumbnailUrl = await VideoThumbnail.thumbnailFile(
-  //       video: widget.pathList[widget.index],
-  //       thumbnailPath: (await getTemporaryDirectory()).path,
-  //       imageFormat: ImageFormat.WEBP);
-
-  //   // _thumbnailData = await VideoThumbnail.thumbnailData(
-  //   //   video: videoTempFile2.path,
-  //   //   imageFormat: ImageFormat.JPEG,
-  //   //   // maxHeight: 300,
-  //   //   // maxWidth: 300,
-  //   //   quality: 75,
-  //   // );
-
-  //   setState(() {});
-  // }
 
   List<String> viewList = [];
 
@@ -102,9 +56,10 @@ class _CustomListTileVideosState extends State<CustomListTileVideos> {
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
       child: InkWell(
         onTap: () {
-          Navigator.of(context).pushReplacement(MaterialPageRoute(
+          Navigator.of(context).push(MaterialPageRoute(
               builder: (context) => PlayerScreen(
-                    path: widget.pathList[widget.index], name: widget.pathList[widget.index].split('/').last,
+                    path: widget.pathList[widget.index],
+                    name: widget.pathList[widget.index].split('/').last,
                   )));
         },
         child: SizedBox(
@@ -118,7 +73,7 @@ class _CustomListTileVideosState extends State<CustomListTileVideos> {
               Row(
                 children: [
                   Stack(alignment: Alignment.center, children: [
-                   Container(
+                    Container(
                       width: MediaQuery.of(context).size.width * 0.20,
                       height: MediaQuery.of(context).size.width * 0.13,
                       decoration: BoxDecoration(
@@ -133,7 +88,7 @@ class _CustomListTileVideosState extends State<CustomListTileVideos> {
                         //     fit: BoxFit.fill,
                         //     image: FileImage(File(_thumbnailFile!))),
                       ),
-                    ) ,
+                    ),
                     CircleAvatar(
                       radius: 10,
                       backgroundColor: Colors.black45,
@@ -207,8 +162,8 @@ class _CustomListTileVideosState extends State<CustomListTileVideos> {
                       onSelected: (item) => onSelected(context, item),
                       itemBuilder: (context) => [
                         ...MenuListItems.itemFirst.map(buildItem).toList(),
-                        const PopupMenuDivider(),
-                        ...MenuListItems.itemSecond.map(buildItem).toList(),
+                        // const PopupMenuDivider(),
+                        // ...MenuListItems.itemSecond.map(buildItem).toList(),
                       ],
                     ),
                     // child: IconButton(
@@ -245,15 +200,24 @@ class _CustomListTileVideosState extends State<CustomListTileVideos> {
 
   void onSelected(BuildContext context, MenuItem item) {
     switch (item) {
-      case MenuListItems.itemSettings:
+      case MenuListItems.itemFavorite:
         // Navigator.of(context).pop();
+        boxVideos.putAt(
+            widget.index,
+            Videos(
+                paths: widget.pathList[widget.index],
+                thumb: widget.url,
+                fav: true));
+        boxFavorite.add(Favorites(
+            favorite: widget.pathList[widget.index], thumb: widget.url));
+
         break;
       case MenuListItems.itemShare:
         // Navigator.of(context).pop();
         break;
-      case MenuListItems.itemSignOut:
-        // Navigator.of(context).pop();
-        break;
+      // case MenuListItems.itemSignOut:
+      //   // Navigator.of(context).pop();
+      //   break;
       default:
     }
   }
