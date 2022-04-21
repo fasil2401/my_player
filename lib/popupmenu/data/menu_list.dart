@@ -11,12 +11,17 @@ class MenuListItems {
 
   static const itemFavorite = MenuItem(
     modeltext: 'Add to Favorites',
-    icon: MyFlutterApp.heart_empty,
+    icon: MyFlutterApp.heart_empty, 
+    selectedIcon: MyFlutterApp.heart, 
+    selectedtext: 'Remove from Favorites',
+    
   );
 
   static const itemShare = MenuItem(
     modeltext: 'Share',
-    icon: Icons.share,
+    icon: Icons.share, 
+    selectedIcon: Icons.share, 
+    selectedtext: 'Share',
   );
 
   // static const itemSignOut = MenuItem(

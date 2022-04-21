@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:hive/hive.dart';
 part 'model.g.dart';
 
@@ -8,8 +9,8 @@ class Videos extends HiveObject {
   @HiveField(1)
   var thumb;
   @HiveField(2)
-  bool? fav;
-  Videos({required this.paths, required this.thumb, this.fav});
+  bool fav = false;
+  Videos({required this.paths, required this.thumb, required this.fav});
 }
 
 @HiveType(typeId: 1)
@@ -18,5 +19,6 @@ class Favorites extends HiveObject {
   String favorite;
   @HiveField(1)
   var thumb;
+
   Favorites({required this.favorite, required this.thumb});
 }

@@ -17,6 +17,8 @@ class _AllVideoListState extends State<AllVideoList> {
   List<String> _pathList = [];
   List thumbs = [];
   List<String> viewList = [];
+  bool? isFavorite;
+  var key;
   var boxVideos = Hive.box<Videos>(videoBox);
   @override
   Widget build(BuildContext context) {
@@ -30,6 +32,9 @@ class _AllVideoListState extends State<AllVideoList> {
             List<Videos> videoPaths = value.values.toList();
             print('ivde aanooov all videos  ${videoPaths}');
             for (var i = 0; i < videoPaths.length; i++) {
+              // keyList.add(videoPaths[i].key);
+              isFavorite = videoPaths[i].fav;
+              // key = videoPaths[i].key;
               _pathList.add(videoPaths[i].paths);
               thumbs.add(videoPaths[i].thumb);
             }
@@ -44,6 +49,8 @@ class _AllVideoListState extends State<AllVideoList> {
                   url: thumbs[index],
                   folderName: '',
                   pathList: _pathList,
+                  Customkey: key,
+                  isFavorite: isFavorite!,
                 );
               },
             );

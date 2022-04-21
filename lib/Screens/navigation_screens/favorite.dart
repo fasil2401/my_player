@@ -32,6 +32,8 @@ class _FavoriteVideoListState extends State<FavoriteVideoList> {
   List<String> _pathList = [];
   List thumbs = [];
   List<String> viewList = [];
+  bool isFavorite = true;
+  var key;
 
   var boxFavorites = Hive.box<Favorites>(favoriteBox);
   @override
@@ -47,10 +49,14 @@ class _FavoriteVideoListState extends State<FavoriteVideoList> {
             List<Favorites> videopaths = value.values.toList();
             print('ivde aanooov favorite videos  ${videopaths}');
             for (var i = 0; i < videopaths.length; i++) {
+              // keyList.add(videopaths[i].key);
+
+              key = videopaths[i].key;
               _pathList.add(videopaths[i].favorite);
               thumbs.add(videopaths[i].thumb);
             }
             return ListView.builder(
+              // physics: NeverScrollableScrollPhysics(),
               itemCount: _pathList.length,
               itemBuilder: (BuildContext context, int index) {
                 return CustomListTileVideos(
@@ -61,6 +67,8 @@ class _FavoriteVideoListState extends State<FavoriteVideoList> {
                   url: thumbs[index],
                   folderName: '',
                   pathList: _pathList,
+                  Customkey: key,
+                  isFavorite: isFavorite,
                 );
               },
             );

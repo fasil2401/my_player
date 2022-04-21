@@ -19,7 +19,7 @@ class VideosAdapter extends TypeAdapter<Videos> {
     return Videos(
       paths: fields[0] as String,
       thumb: fields[1] as dynamic,
-      fav: fields[2] as bool?,
+      fav: fields[2] as bool,
     );
   }
 

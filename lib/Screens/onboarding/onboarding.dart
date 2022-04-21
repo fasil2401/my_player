@@ -169,7 +169,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
       thumbs.add(key);
       setState(() {});
       print('hi ${_pathList[i]}');
-      boxVideos.put(i, Videos(paths: _pathList[i], thumb: thumbs[i]));
+      boxVideos.put(i, Videos(paths: _pathList[i], thumb: thumbs[i],fav:  false));
 
       // print(listBox[i]);
     }

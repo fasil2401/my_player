@@ -5,6 +5,7 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hive_flutter/adapters.dart';
+import 'package:my_player/Screens/navigation_screens/favorite.dart';
 import 'package:my_player/Screens/player_screen/palyer.dart';
 import 'package:my_player/icons/my_flutter_app_icons.dart';
 import 'package:my_player/main.dart';
@@ -12,27 +13,33 @@ import 'package:my_player/model/model.dart';
 import 'package:my_player/popupmenu/data/menu_list.dart';
 import 'package:my_player/popupmenu/model/menu_item.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
 
 class CustomListTileVideos extends StatefulWidget {
-  CustomListTileVideos(
-      {Key? key,
-      required this.subtite,
-      required this.trailicon,
-      required this.index,
-      required this.text,
-      required this.url,
-      required this.folderName,
-      required this.pathList})
-      : super(key: key);
+  CustomListTileVideos({
+    Key? key,
+    required this.subtite,
+    required this.trailicon,
+    required this.index,
+    required this.text,
+    required this.url,
+    required this.folderName,
+    required this.pathList,
+    required this.Customkey,
+    required this.isFavorite,
+  }) : super(key: key);
 
   final bool subtite;
   final bool trailicon;
+  final bool isFavorite;
   final int index;
   final String text;
   var url;
   final String folderName;
   List<String> pathList = [];
+  // List<String> keyList = [];
+  var Customkey;
 
   @override
   State<CustomListTileVideos> createState() => _CustomListTileVideosState();
@@ -185,40 +192,98 @@ class _CustomListTileVideosState extends State<CustomListTileVideos> {
       child: Row(
         children: [
           Icon(
-            item.icon,
+            widget.isFavorite ? item.selectedIcon : item.icon,
             size: 20,
           ),
           const SizedBox(
             width: 15,
           ),
           Text(
-            item.modeltext,
+            widget.isFavorite ? item.selectedtext : item.modeltext,
             style: TextStyle(fontFamily: "Poppins"),
           ),
         ],
       ));
 
-  void onSelected(BuildContext context, MenuItem item) {
+  Future<void> onSelected(BuildContext context, MenuItem item) async {
     switch (item) {
       case MenuListItems.itemFavorite:
         // Navigator.of(context).pop();
-        boxVideos.putAt(
-            widget.index,
-            Videos(
-                paths: widget.pathList[widget.index],
-                thumb: widget.url,
-                fav: true));
-        boxFavorite.add(Favorites(
-            favorite: widget.pathList[widget.index], thumb: widget.url));
+        // widget.isFavorite!
+        //     ? boxFavorite.delete(widget.Customkey)
+        //     : boxFavorite.add(Favorites(
+        //         favorite: widget.pathList[widget.index],
+        //         thumb: widget.url,
+        //       ));
+
+        // if (widget.isFavorite == true) {
+        //   setState(() {
+        //     boxFavorite.delete(widget.Customkey);
+        //     boxVideos.put(
+        //         widget.index,
+        //         Videos(
+        //             paths: widget.pathList[widget.index],
+        //             thumb: widget.url,
+        //             fav: false),);
+        //   });
+
+        // Navigator.of(context).push(MaterialPageRoute(builder: (context) => ))
+        // } else {
+        //   setState(() {
+        //     boxVideos.put(
+        //         widget.index,
+        //         Videos(
+        //             paths: widget.pathList[widget.index],
+        //             thumb: widget.url,
+        //             fav: true));
+
+        //     boxFavorite.add(Favorites(
+        //       favorite: widget.pathList[widget.index],
+        //       thumb: widget.url,
+        //     ));
+        //   });
+
+        //   // setState(() {});
+        // }
+
+        // boxVideos.putAt(
+        //     widget.index,
+        //     Videos(
+        //         paths: widget.pathList[widget.index],
+        //         thumb: widget.url,
+        //         fav: true));
+        // boxFavorite.add(Favorites(
+        //   favorite: widget.pathList[widget.index],
+        //   thumb: widget.url,
+        // ));
+        if (widget.isFavorite == true) {
+          deleteFavorites();
+        } else {
+          // Box<Videos> value;
+          // List<Videos> videopaths = value.values.toList();
+          ValueNotifier(
+            boxFavorite.put(
+                widget.index,
+                Favorites(
+                  favorite: widget.pathList[widget.index],
+                  thumb: widget.url,
+                )),
+          );
+        }
 
         break;
       case MenuListItems.itemShare:
         // Navigator.of(context).pop();
+        await Share.shareFiles([widget.pathList[widget.index]]);
         break;
       // case MenuListItems.itemSignOut:
       //   // Navigator.of(context).pop();
       //   break;
       default:
     }
+  }
+
+  void deleteFavorites() async {
+    await boxFavorite.delete(widget.Customkey);
   }
 }
