@@ -36,6 +36,7 @@ void main() async {
   await Hive.initFlutter();
   Hive.registerAdapter(VideosAdapter());
   Hive.registerAdapter(FavoritesAdapter());
+  
   await Hive.openBox<Videos>(videoBox);
   await Hive.openBox<Favorites>(favoriteBox);
 

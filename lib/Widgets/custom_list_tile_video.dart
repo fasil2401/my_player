@@ -5,6 +5,7 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hive_flutter/adapters.dart';
+import 'package:my_player/Screens/navigation_screens/all_videos.dart';
 import 'package:my_player/Screens/navigation_screens/favorite.dart';
 import 'package:my_player/Screens/player_screen/palyer.dart';
 import 'package:my_player/icons/my_flutter_app_icons.dart';
@@ -51,7 +52,7 @@ class _CustomListTileVideosState extends State<CustomListTileVideos> {
 
   @override
   void initState() {
-    setState(() {});
+    // setState(() {});
     super.initState();
   }
 
@@ -257,7 +258,40 @@ class _CustomListTileVideosState extends State<CustomListTileVideos> {
         //   thumb: widget.url,
         // ));
         if (widget.isFavorite == true) {
-          deleteFavorites();
+          showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  title: const Text("Delete"),
+                  content: const Text("Do you want to remove it?"),
+                  actions: [
+                    TextButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        child: const Text("No")),
+                    TextButton(
+                        onPressed: () async {
+                          deleteFavorites();
+
+                          Navigator.pop(context);
+                          // boxFavorite.get(widget.Customkey);
+                          // Navigator.of(context).push(MaterialPageRoute(
+                          //     builder: (context) => AllVideoList()));
+                          await Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => FavoriteVideoList()));
+                          // setState(() {});
+
+                          Navigator.pop(context);
+
+                          ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                  content: Text("Removed Successfully")));
+                        },
+                        child: const Text("Yes"))
+                  ],
+                );
+              });
         } else {
           // Box<Videos> value;
           // List<Videos> videopaths = value.values.toList();

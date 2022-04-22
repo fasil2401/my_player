@@ -82,3 +82,38 @@ class FavoritesAdapter extends TypeAdapter<Favorites> {
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }
+
+class PlayListAdapter extends TypeAdapter<PlayList> {
+  @override
+  final int typeId = 2;
+
+  @override
+  PlayList read(BinaryReader reader) {
+    final numOfFields = reader.readByte();
+    final fields = <int, dynamic>{
+      for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
+    };
+    return PlayList(
+      playlist: (fields[0] as Map)
+          .map((dynamic k, dynamic v) => MapEntry(k as String, v as Uint8List)),
+    );
+  }
+
+  @override
+  void write(BinaryWriter writer, PlayList obj) {
+    writer
+      ..writeByte(1)
+      ..writeByte(0)
+      ..write(obj.playlist);
+  }
+
+  @override
+  int get hashCode => typeId.hashCode;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is PlayListAdapter &&
+          runtimeType == other.runtimeType &&
+          typeId == other.typeId;
+}

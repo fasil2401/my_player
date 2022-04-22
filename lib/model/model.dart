@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:flutter/cupertino.dart';
 import 'package:hive/hive.dart';
 part 'model.g.dart';
@@ -21,4 +23,12 @@ class Favorites extends HiveObject {
   var thumb;
 
   Favorites({required this.favorite, required this.thumb});
+}
+
+@HiveType(typeId: 2)
+class PlayList extends HiveObject {
+  @HiveField(0)
+  Map<String, Uint8List> playlist;
+
+  PlayList({required this.playlist});
 }

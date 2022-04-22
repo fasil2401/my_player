@@ -36,6 +36,28 @@ class _FavoriteVideoListState extends State<FavoriteVideoList> {
   var key;
 
   var boxFavorites = Hive.box<Favorites>(favoriteBox);
+
+  // List<Map<String, dynamic>> _items = [];
+  // void refreshItems() {
+  //   final data = boxFavorites.keys.map((key) {
+  //     final value = boxFavorites.get(key);
+  //     return {
+  //       "key": key,
+  //     };
+  //   }).toList();
+
+  //   setState(() {
+  //     _items = data.toList();
+  //     // we use "reversed" to sort items in order from the latest to the oldest
+  //   });
+  // }
+  @override
+  void initState() {
+    setState(() {});
+    // TODO: implement initState
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
