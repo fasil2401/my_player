@@ -16,7 +16,7 @@ class Videos extends HiveObject {
 }
 
 @HiveType(typeId: 1)
-class Favorites extends HiveObject {
+class Favorites extends HiveObject{
   @HiveField(0)
   String favorite;
   @HiveField(1)
