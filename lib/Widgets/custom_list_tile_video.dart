@@ -8,6 +8,7 @@ import 'package:hive_flutter/adapters.dart';
 import 'package:my_player/Screens/navigation_screens/all_videos.dart';
 import 'package:my_player/Screens/navigation_screens/favorite.dart';
 import 'package:my_player/Screens/player_screen/palyer.dart';
+import 'package:my_player/bottom_navigation/screenhome.dart';
 import 'package:my_player/icons/my_flutter_app_icons.dart';
 import 'package:my_player/main.dart';
 import 'package:my_player/model/model.dart';
@@ -278,13 +279,13 @@ class _CustomListTileVideosState extends State<CustomListTileVideos> {
                           // boxFavorite.get(widget.Customkey);
                           // Navigator.of(context).push(MaterialPageRoute(
                           //     builder: (context) => AllVideoList()));
-                          await Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => FavoriteVideoList()));
+                          await Navigator.of(context).pushReplacement(MaterialPageRoute(
+                              builder: (context) => ScreenHome()));
                           // setState(() {});
 
-                          Navigator.pop(context);
+                          // Navigator.pop(context);
 
-                          ScaffoldMessenger.of(context).showSnackBar(
+                         await ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(
                                   content: Text("Removed Successfully")));
                         },
@@ -299,8 +300,10 @@ class _CustomListTileVideosState extends State<CustomListTileVideos> {
             boxFavorite.put(
                 widget.index,
                 Favorites(
+
                   favorite: widget.pathList[widget.index],
                   thumb: widget.url,
+
                 )),
           );
         }
@@ -318,6 +321,14 @@ class _CustomListTileVideosState extends State<CustomListTileVideos> {
   }
 
   void deleteFavorites() async {
-    await boxFavorite.delete(widget.Customkey);
+    // await boxFavorite.delete(widget.Customkey);
+    // final userToDelete =
+    // await _userBox.values.firstWhere((element) => element.id == id);
+    // await userToDelete.delete();
+    final videotoremove =
+     boxFavorite.values.firstWhere((element) => element.favorite ==  widget.pathList[widget.index]);
+    await videotoremove.delete();
+
   }
+
 }
