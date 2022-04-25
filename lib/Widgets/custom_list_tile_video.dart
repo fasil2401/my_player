@@ -29,6 +29,7 @@ class CustomListTileVideos extends StatefulWidget {
     required this.pathList,
     required this.Customkey,
     required this.isFavorite,
+    this.voidCallback
   }) : super(key: key);
 
   final bool subtite;
@@ -41,6 +42,7 @@ class CustomListTileVideos extends StatefulWidget {
   List<String> pathList = [];
   // List<String> keyList = [];
   var Customkey;
+  final VoidCallback? voidCallback;
 
   @override
   State<CustomListTileVideos> createState() => _CustomListTileVideosState();
@@ -271,27 +273,20 @@ class _CustomListTileVideosState extends State<CustomListTileVideos> {
                         },
                         child: const Text("No")),
                     TextButton(
-                        onPressed: () async {
-                          deleteFavorites();
+                        onPressed: (){
+                          boxFavorite.delete(widget.Customkey);
+                          Navigator.of(context).pop();
 
-                          Navigator.pop(context);
-                          // boxFavorite.get(widget.Customkey);
-                          // Navigator.of(context).push(MaterialPageRoute(
-                          //     builder: (context) => AllVideoList()));
-                          await Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => FavoriteVideoList()));
-                          // setState(() {});
-
-                          Navigator.pop(context);
-
-                          ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                  content: Text("Removed Successfully")));
+                          // setState(() {
+                          //
+                          // });
                         },
+                        // widget.voidCallback,
                         child: const Text("Yes"))
                   ],
                 );
               });
+
         } else {
           // Box<Videos> value;
           // List<Videos> videopaths = value.values.toList();
@@ -317,7 +312,5 @@ class _CustomListTileVideosState extends State<CustomListTileVideos> {
     }
   }
 
-  void deleteFavorites() async {
-    await boxFavorite.delete(widget.Customkey);
-  }
+
 }

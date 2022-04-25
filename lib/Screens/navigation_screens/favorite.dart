@@ -91,6 +91,27 @@ class _FavoriteVideoListState extends State<FavoriteVideoList> {
                   pathList: _pathList,
                   Customkey: key,
                   isFavorite: isFavorite,
+                  voidCallback: (){
+                    // deleteFavorites();
+                      // boxFavorites.deleteAt(index);
+                      // setState(() {
+                      //
+                      // });
+
+                    // Navigator.pop(context);
+                    // // boxFavorite.get(widget.Customkey);
+                    // // Navigator.of(context).push(MaterialPageRoute(
+                    // //     builder: (context) => AllVideoList()));
+                    // await Navigator.of(context).push(MaterialPageRoute(
+                    //     builder: (context) => FavoriteVideoList()));
+                    // setState(() {});
+
+                    Navigator.pop(context);
+
+                    ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                            content: Text("Removed Successfully")));
+                  },
                 );
               },
             );
@@ -104,4 +125,5 @@ class _FavoriteVideoListState extends State<FavoriteVideoList> {
       // ),
     );
   }
+
 }
