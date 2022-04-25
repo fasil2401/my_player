@@ -19,19 +19,19 @@ import 'package:share_plus/share_plus.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
 
 class CustomListTileVideos extends StatefulWidget {
-  CustomListTileVideos({
-    Key? key,
-    required this.subtite,
-    required this.trailicon,
-    required this.index,
-    required this.text,
-    required this.url,
-    required this.folderName,
-    required this.pathList,
-    required this.Customkey,
-    required this.isFavorite,
-    this.voidCallback
-  }) : super(key: key);
+  CustomListTileVideos(
+      {Key? key,
+      required this.subtite,
+      required this.trailicon,
+      required this.index,
+      required this.text,
+      required this.url,
+      required this.folderName,
+      required this.pathList,
+      required this.Customkey,
+      required this.isFavorite,
+      this.voidCallback})
+      : super(key: key);
 
   final bool subtite;
   final bool trailicon;
@@ -83,33 +83,36 @@ class _CustomListTileVideosState extends State<CustomListTileVideos> {
             children: [
               Row(
                 children: [
-                  Stack(alignment: Alignment.center, children: [
-                    Container(
-                      width: MediaQuery.of(context).size.width * 0.20,
-                      height: MediaQuery.of(context).size.width * 0.13,
-                      decoration: BoxDecoration(
-                        color: Colors.grey.withOpacity(0.4),
-                        borderRadius: BorderRadius.circular(6.0),
-                        image: DecorationImage(
-                          fit: BoxFit.fitHeight,
-                          //  image: FileImage(File(fileKitti))))),
-                          image: MemoryImage(widget.url),
+                  Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      Container(
+                        width: MediaQuery.of(context).size.width * 0.20,
+                        height: MediaQuery.of(context).size.width * 0.13,
+                        decoration: BoxDecoration(
+                          color: Colors.grey.withOpacity(0.4),
+                          borderRadius: BorderRadius.circular(6.0),
+                          image: DecorationImage(
+                            fit: BoxFit.fitHeight,
+                            //  image: FileImage(File(fileKitti))))),
+                            image: MemoryImage(widget.url),
+                          ),
+                          // image: DecorationImage(
+                          //     fit: BoxFit.fill,
+                          //     image: FileImage(File(_thumbnailFile!))),
                         ),
-                        // image: DecorationImage(
-                        //     fit: BoxFit.fill,
-                        //     image: FileImage(File(_thumbnailFile!))),
                       ),
-                    ),
-                    CircleAvatar(
-                      radius: 10,
-                      backgroundColor: Colors.black45,
-                      child: Icon(
-                        Icons.play_arrow,
-                        size: 15,
-                        color: Colors.white,
+                      CircleAvatar(
+                        radius: 10,
+                        backgroundColor: Colors.black45,
+                        child: Icon(
+                          Icons.play_arrow,
+                          size: 15,
+                          color: Colors.white,
+                        ),
                       ),
-                    )
-                  ]),
+                    ],
+                  ),
                   // SizedBox(
                   //   width:  MediaQuery.of(context).size.width * 0.2,
 
@@ -192,22 +195,23 @@ class _CustomListTileVideosState extends State<CustomListTileVideos> {
   }
 
   PopupMenuItem<MenuItem> buildItem(MenuItem item) => PopupMenuItem<MenuItem>(
-      value: item,
-      child: Row(
-        children: [
-          Icon(
-            widget.isFavorite ? item.selectedIcon : item.icon,
-            size: 20,
-          ),
-          const SizedBox(
-            width: 15,
-          ),
-          Text(
-            widget.isFavorite ? item.selectedtext : item.modeltext,
-            style: TextStyle(fontFamily: "Poppins"),
-          ),
-        ],
-      ));
+        value: item,
+        child: Row(
+          children: [
+            Icon(
+              widget.isFavorite ? item.selectedIcon : item.icon,
+              size: 20,
+            ),
+            const SizedBox(
+              width: 15,
+            ),
+            Text(
+              widget.isFavorite ? item.selectedtext : item.modeltext,
+              style: TextStyle(fontFamily: "Poppins"),
+            ),
+          ],
+        ),
+      );
 
   Future<void> onSelected(BuildContext context, MenuItem item) async {
     switch (item) {
@@ -262,57 +266,58 @@ class _CustomListTileVideosState extends State<CustomListTileVideos> {
         // ));
         if (widget.isFavorite == true) {
           showDialog(
-              context: context,
-              builder: (BuildContext context) {
-                return AlertDialog(
-                  title: const Text("Delete"),
-                  content: const Text("Do you want to remove it?"),
-                  actions: [
-                    TextButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        child: const Text("No")),
-                    TextButton(
-                        onPressed: (){
-                          boxFavorite.delete(widget.Customkey);
-                          Navigator.of(context).pop();
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: const Text("Delete"),
+                content: const Text("Do you want to remove it?"),
+                actions: [
+                  TextButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: const Text("No")),
+                  TextButton(
+                      onPressed: () {
+                       deleteFavorites();
+                        Navigator.of(context).pop();
 
+                        // Navigator.pop(context);
+                        // boxFavorite.get(widget.Customkey);
+                        // Navigator.of(context).push(MaterialPageRoute(
+                        //     builder: (context) => AllVideoList()));
+                        Navigator.of(context).pushReplacement(MaterialPageRoute(
+                            builder: (context) => ScreenHome()));
+                        // setState(() {});
 
-                          Navigator.pop(context);
-                          // boxFavorite.get(widget.Customkey);
-                          // Navigator.of(context).push(MaterialPageRoute(
-                          //     builder: (context) => AllVideoList()));
-                           Navigator.of(context).pushReplacement(MaterialPageRoute(
-                              builder: (context) => ScreenHome()));
-                          // setState(() {});
+                        // Navigator.pop(context);
 
-                          // Navigator.pop(context);
-
-                          ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                  content: Text("Removed Successfully")));
-
-                        },
-                        // widget.voidCallback,
-                        child: const Text("Yes"))
-                  ],
-                );
-              });
-
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                                content: Text("Removed Successfully")));
+                      },
+                      // widget.voidCallback,
+                      child: const Text("Yes"))
+                ],
+              );
+            },
+          );
         } else {
           // Box<Videos> value;
           // List<Videos> videopaths = value.values.toList();
           ValueNotifier(
             boxFavorite.put(
-                widget.index,
-                Favorites(
-
-                  favorite: widget.pathList[widget.index],
-                  thumb: widget.url,
-
-                )),
+              widget.index,
+              Favorites(
+                favorite: widget.pathList[widget.index],
+                thumb: widget.url,
+              ),
+            ),
           );
+          ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                  content: Text("Added to favorites")));
+
         }
 
         break;
@@ -327,17 +332,13 @@ class _CustomListTileVideosState extends State<CustomListTileVideos> {
     }
   }
 
-
   void deleteFavorites() async {
     // await boxFavorite.delete(widget.Customkey);
     // final userToDelete =
     // await _userBox.values.firstWhere((element) => element.id == id);
     // await userToDelete.delete();
-    final videotoremove =
-     boxFavorite.values.firstWhere((element) => element.favorite ==  widget.pathList[widget.index]);
+    final videotoremove = boxFavorite.values.firstWhere(
+        (element) => element.favorite == widget.pathList[widget.index]);
     await videotoremove.delete();
-
   }
-
-
 }

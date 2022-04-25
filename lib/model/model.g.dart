@@ -94,17 +94,19 @@ class PlayListAdapter extends TypeAdapter<PlayList> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return PlayList(
-      playlist: (fields[0] as Map)
-          .map((dynamic k, dynamic v) => MapEntry(k as String, v as Uint8List)),
+      playList: (fields[1] as List).cast<String>(),
+      name: fields[0] as String,
     );
   }
 
   @override
   void write(BinaryWriter writer, PlayList obj) {
     writer
-      ..writeByte(1)
+      ..writeByte(2)
       ..writeByte(0)
-      ..write(obj.playlist);
+      ..write(obj.name)
+      ..writeByte(1)
+      ..write(obj.playList);
   }
 
   @override

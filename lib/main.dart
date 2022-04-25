@@ -22,6 +22,7 @@ List<String> pathListMain = [];
 
 const videoBox = 'boxVideos';
 const favoriteBox = 'boxFavorites';
+const playlistBox = 'boxPlaylist';
 
 void main() async {
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
@@ -36,9 +37,13 @@ void main() async {
   await Hive.initFlutter();
   Hive.registerAdapter(VideosAdapter());
   Hive.registerAdapter(FavoritesAdapter());
+  Hive.registerAdapter(PlayListAdapter());
+
+
   
   await Hive.openBox<Videos>(videoBox);
   await Hive.openBox<Favorites>(favoriteBox);
+  await Hive.openBox<PlayList>(playlistBox);
 
 
   runApp(const MyApp());

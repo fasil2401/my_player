@@ -28,7 +28,9 @@ class Favorites extends HiveObject{
 @HiveType(typeId: 2)
 class PlayList extends HiveObject {
   @HiveField(0)
-  Map<String, Uint8List> playlist;
+  String name;
+  @HiveField(1)
+  List<String>playList;
 
-  PlayList({required this.playlist});
+  PlayList({required this.playList, required this.name});
 }
