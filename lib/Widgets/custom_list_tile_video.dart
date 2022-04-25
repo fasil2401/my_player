@@ -52,6 +52,10 @@ class CustomListTileVideos extends StatefulWidget {
 class _CustomListTileVideosState extends State<CustomListTileVideos> {
   var boxVideos = Hive.box<Videos>(videoBox);
   var boxFavorite = Hive.box<Favorites>(favoriteBox);
+  var boxPlaylist = Hive.box<PlayList>(playlistBox);
+  List<String> _playListNames = [];
+
+  
 
   @override
   void initState() {
@@ -279,7 +283,7 @@ class _CustomListTileVideosState extends State<CustomListTileVideos> {
                       child: const Text("No")),
                   TextButton(
                       onPressed: () {
-                       deleteFavorites();
+                        deleteFavorites();
                         Navigator.of(context).pop();
 
                         // Navigator.pop(context);
@@ -294,6 +298,8 @@ class _CustomListTileVideosState extends State<CustomListTileVideos> {
 
                         ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
+                                behavior: SnackBarBehavior.floating,
+                                margin: EdgeInsets.only(bottom: 80.0),
                                 content: Text("Removed Successfully")));
                       },
                       // widget.voidCallback,
@@ -314,20 +320,40 @@ class _CustomListTileVideosState extends State<CustomListTileVideos> {
               ),
             ),
           );
-          ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(
-                  content: Text("Added to favorites")));
-
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+              behavior: SnackBarBehavior.floating,
+              margin: EdgeInsets.only(bottom: 70.0),
+              content: Text("Added to favorites")));
         }
 
+        break;
+
+      case MenuListItems.itemPLaylist:
+        // Navigator.of(context).pop();
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Center(
+                child: const Text(
+                  'Playlists',
+                  style: TextStyle(
+                    fontFamily: 'Poppins',
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              
+            );
+          },
+        );
         break;
       case MenuListItems.itemShare:
         // Navigator.of(context).pop();
         await Share.shareFiles([widget.pathList[widget.index]]);
         break;
-      // case MenuListItems.itemSignOut:
-      //   // Navigator.of(context).pop();
-      //   break;
+
       default:
     }
   }
