@@ -12,30 +12,35 @@ class PlayerScreen extends StatefulWidget {
 }
 
 class _PlayerScreenState extends State<PlayerScreen> {
-  // late BetterPlayerController _betterPlayerController;
-  // @override
-  // void initState() {
-  //   BetterPlayerConfiguration betterPlayerConfiguration =
-  //       BetterPlayerConfiguration(
-  //     aspectRatio: 16 / 9,
-  //     fit: BoxFit.contain,
-  //   );
-  //     _betterPlayerController = BetterPlayerController(betterPlayerConfiguration);
-  //   _setupDataSource();
-  //   super.initState();
-  // }
-  // void _setupDataSource() async {
-  //   var filePath = await Utils.getFileUrl(Constants.fileTestVideoUrl);
-  //   File file = File(filePath);
+  late BetterPlayerController _betterPlayerController;
+  GlobalKey _betterPlayerKey = GlobalKey();
 
-  //   List<int> bytes = file.readAsBytesSync().buffer.asUint8List();
-  //   BetterPlayerDataSource dataSource =
-  //       BetterPlayerDataSource.file("assets/videos/video.mp4");
-  //   _betterPlayerController.setupDataSource(dataSource);
-  // }
   @override
   void initState() {
-    // TODO: implement initState
+    const BetterPlayerConfiguration betterPlayerConfiguration =
+        BetterPlayerConfiguration(
+            fit: BoxFit.contain,
+            aspectRatio: 16 / 9,
+            looping: false,
+            autoDispose: true,
+            handleLifecycle: true,
+            
+            controlsConfiguration: BetterPlayerControlsConfiguration(
+                playerTheme: BetterPlayerTheme.cupertino));
+    BetterPlayerDataSource dataSource = BetterPlayerDataSource(
+      
+      BetterPlayerDataSourceType.file,
+      widget.path,
+      notificationConfiguration: BetterPlayerNotificationConfiguration(
+        title: widget.name,
+        imageUrl: 'https://images.hdqwalls.com/download/butterfly-on-rocks-4k-s1-1920x1080.jpg',
+        showNotification: true,
+      )
+    );
+  _betterPlayerController =BetterPlayerController(betterPlayerConfiguration);
+  _betterPlayerController.setupDataSource(dataSource);
+  _betterPlayerController.setBetterPlayerGlobalKey(_betterPlayerKey);
+  _betterPlayerController.enablePictureInPicture(_betterPlayerKey);
     super.initState();
   }
 
@@ -44,11 +49,6 @@ class _PlayerScreenState extends State<PlayerScreen> {
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
-        // leading: IconButton(
-        //     onPressed: () {
-        //       Navigator.pop(context);
-        //     },
-        //     icon: Icon(Icons.arrow_back)),
         elevation: 0,
         backgroundColor: Colors.black,
         automaticallyImplyLeading: true,
@@ -58,25 +58,20 @@ class _PlayerScreenState extends State<PlayerScreen> {
         child: Center(
           child: AspectRatio(
             aspectRatio: 16 / 9,
-            child: BetterPlayer.file(
-              widget.path,
-              betterPlayerConfiguration: BetterPlayerConfiguration(
-                  aspectRatio: 16 / 9, looping: false),
+            child: BetterPlayer(
+              controller: _betterPlayerController,
+              key: _betterPlayerKey,
+              // betterPlayerConfiguration: const BetterPlayerConfiguration(
+              //     aspectRatio: 16 / 9,
+              //     looping: false,
+              //     autoDispose: true,
+              //     controlsConfiguration: BetterPlayerControlsConfiguration(
+              //         playerTheme: BetterPlayerTheme.cupertino)),
             ),
+          
           ),
         ),
       ),
     );
   }
 }
-// class Constants{
-//   static const String fileTestVideoUrl = "video.mp4";
-//   // static const String fileTestVideoEncryptUrl = "video_encrypt.mp4";
-// }
-
-// class Utils {
-//   static Future<String> getFileUrl(String fileName) async {
-//     final directory = await getApplicationDocumentsDirectory();
-//     return "${directory.path}/$fileName";
-//   }
-// }
