@@ -124,8 +124,8 @@ class _CustomListTileFolderState extends State<CustomListTileFolder> {
               Row(
                 children: [
                   Icon(
-                    MyFlutterApp.folder_1,
-                    size: MediaQuery.of(context).size.width * 0.13,
+                    MyFlutterApp.folder,
+                    size: MediaQuery.of(context).size.width * 0.11,
                   ),
                   const SizedBox(
                     width: 15,
@@ -141,7 +141,7 @@ class _CustomListTileFolderState extends State<CustomListTileFolder> {
                           maxLines: 3,
                           style: TextStyle(
                             fontFamily: "Poppins",
-                            fontSize: MediaQuery.of(context).size.width * 0.046,
+                            fontSize: MediaQuery.of(context).size.width * 0.047,
                           ),
                         ),
                       ),

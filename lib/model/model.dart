@@ -31,6 +31,7 @@ class PlayList extends HiveObject {
   String name;
   @HiveField(1)
   List<String>playList;
+ 
 
-  PlayList({required this.playList, required this.name});
+  PlayList({required this.playList, required this.name,});
 }

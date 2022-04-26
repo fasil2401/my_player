@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:my_player/Screens/navigation_screens/widgets/color_detail_page.dart';
-import 'package:my_player/Screens/navigation_screens/widgets/colors_list_page.dart';
 import 'package:my_player/Screens/navigation_screens/widgets/tab_item.dart';
 
 class TabNavigatorRoutes {

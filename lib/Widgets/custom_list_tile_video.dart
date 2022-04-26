@@ -55,8 +55,6 @@ class _CustomListTileVideosState extends State<CustomListTileVideos> {
   var boxPlaylist = Hive.box<PlayList>(playlistBox);
   List<String> _playListNames = [];
 
-  
-
   @override
   void initState() {
     // setState(() {});
@@ -98,15 +96,11 @@ class _CustomListTileVideosState extends State<CustomListTileVideos> {
                           borderRadius: BorderRadius.circular(6.0),
                           image: DecorationImage(
                             fit: BoxFit.fitHeight,
-                            //  image: FileImage(File(fileKitti))))),
                             image: MemoryImage(widget.url),
                           ),
-                          // image: DecorationImage(
-                          //     fit: BoxFit.fill,
-                          //     image: FileImage(File(_thumbnailFile!))),
                         ),
                       ),
-                      CircleAvatar(
+                      const CircleAvatar(
                         radius: 10,
                         backgroundColor: Colors.black45,
                         child: Icon(
@@ -117,21 +111,6 @@ class _CustomListTileVideosState extends State<CustomListTileVideos> {
                       ),
                     ],
                   ),
-                  // SizedBox(
-                  //   width:  MediaQuery.of(context).size.width * 0.2,
-
-                  //   child: ClipRRect(
-                  //   borderRadius: BorderRadius.circular(6.0),
-                  //   child: Image.network(
-                  //     url,
-
-                  //   ),
-                  //               ),
-                  // ),
-                  // Icon(
-                  //   MyFlutterApp.folder_1,
-                  //   size: MediaQuery.of(context).size.width * 0.13,
-                  // ),
 
                   const SizedBox(
                     width: 15,
@@ -180,14 +159,8 @@ class _CustomListTileVideosState extends State<CustomListTileVideos> {
                       onSelected: (item) => onSelected(context, item),
                       itemBuilder: (context) => [
                         ...MenuListItems.itemFirst.map(buildItem).toList(),
-                        // const PopupMenuDivider(),
-                        // ...MenuListItems.itemSecond.map(buildItem).toList(),
                       ],
                     ),
-                    // child: IconButton(
-                    //   onPressed: () {},
-                    //   icon: const Icon(Icons.more_vert),
-                    // ),
                   ),
                 ],
               )
@@ -220,54 +193,6 @@ class _CustomListTileVideosState extends State<CustomListTileVideos> {
   Future<void> onSelected(BuildContext context, MenuItem item) async {
     switch (item) {
       case MenuListItems.itemFavorite:
-        // Navigator.of(context).pop();
-        // widget.isFavorite!
-        //     ? boxFavorite.delete(widget.Customkey)
-        //     : boxFavorite.add(Favorites(
-        //         favorite: widget.pathList[widget.index],
-        //         thumb: widget.url,
-        //       ));
-
-        // if (widget.isFavorite == true) {
-        //   setState(() {
-        //     boxFavorite.delete(widget.Customkey);
-        //     boxVideos.put(
-        //         widget.index,
-        //         Videos(
-        //             paths: widget.pathList[widget.index],
-        //             thumb: widget.url,
-        //             fav: false),);
-        //   });
-
-        // Navigator.of(context).push(MaterialPageRoute(builder: (context) => ))
-        // } else {
-        //   setState(() {
-        //     boxVideos.put(
-        //         widget.index,
-        //         Videos(
-        //             paths: widget.pathList[widget.index],
-        //             thumb: widget.url,
-        //             fav: true));
-
-        //     boxFavorite.add(Favorites(
-        //       favorite: widget.pathList[widget.index],
-        //       thumb: widget.url,
-        //     ));
-        //   });
-
-        //   // setState(() {});
-        // }
-
-        // boxVideos.putAt(
-        //     widget.index,
-        //     Videos(
-        //         paths: widget.pathList[widget.index],
-        //         thumb: widget.url,
-        //         fav: true));
-        // boxFavorite.add(Favorites(
-        //   favorite: widget.pathList[widget.index],
-        //   thumb: widget.url,
-        // ));
         if (widget.isFavorite == true) {
           showDialog(
             context: context,
@@ -285,32 +210,22 @@ class _CustomListTileVideosState extends State<CustomListTileVideos> {
                       onPressed: () {
                         deleteFavorites();
                         Navigator.of(context).pop();
-
-                        // Navigator.pop(context);
-                        // boxFavorite.get(widget.Customkey);
-                        // Navigator.of(context).push(MaterialPageRoute(
-                        //     builder: (context) => AllVideoList()));
                         Navigator.of(context).pushReplacement(MaterialPageRoute(
                             builder: (context) => ScreenHome()));
-                        // setState(() {});
-
-                        // Navigator.pop(context);
 
                         ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
+                              duration:  Duration(seconds: 1),
                                 behavior: SnackBarBehavior.floating,
                                 margin: EdgeInsets.only(bottom: 80.0),
                                 content: Text("Removed Successfully")));
                       },
-                      // widget.voidCallback,
                       child: const Text("Yes"))
                 ],
               );
             },
           );
         } else {
-          // Box<Videos> value;
-          // List<Videos> videopaths = value.values.toList();
           ValueNotifier(
             boxFavorite.put(
               widget.index,
@@ -321,6 +236,7 @@ class _CustomListTileVideosState extends State<CustomListTileVideos> {
             ),
           );
           ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            duration:  Duration(seconds: 1),
               behavior: SnackBarBehavior.floating,
               margin: EdgeInsets.only(bottom: 70.0),
               content: Text("Added to favorites")));
@@ -334,17 +250,67 @@ class _CustomListTileVideosState extends State<CustomListTileVideos> {
           context: context,
           builder: (BuildContext context) {
             return AlertDialog(
-              title: Center(
-                child: const Text(
-                  'Playlists',
-                  style: TextStyle(
-                    fontFamily: 'Poppins',
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  ),
+              contentPadding: const EdgeInsets.only(top: 6),
+              content: SizedBox(
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height * 0.4,
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: const [
+                        Text(
+                          'Playlists',
+                          style: TextStyle(
+                            fontFamily: 'Poppins',
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
+                   const SizedBox(
+                      height: 10,
+                    ),
+                  Expanded(
+                    child: ValueListenableBuilder(
+                      valueListenable: boxPlaylist.listenable(), 
+                      builder: (BuildContext context, Box<PlayList> value, Widget? child){
+                        List<PlayList> _playListNames = value.values.toList();
+                        return ListView.builder(
+                          itemCount: _playListNames.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return _playListNames.isEmpty
+                              ?const Center(
+                                  child: Text('data'),
+                                )
+                              : InkWell(
+                                onTap: () {
+                                  addToPlaylist(_playListNames[index].name);
+                                  //  _playListNames[index].playList.add(widget.pathList[widget.index]);
+                                  Navigator.of(context).pop();
+                                   print('path ${widget.pathList[widget.index]} Addeddd to ${_playListNames[index].name.toString()}');
+
+                                },
+                                child: ListTile(
+                                      title: Text(
+                                        _playListNames[index].name.toString(),
+                                        style:const TextStyle(
+                                          fontFamily: 'Poppins',
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.w400,
+                                        ),
+                                      ),
+                                      leading:const Icon(MyFlutterApp.video_library),
+                                    ),
+                              );
+                          },);
+                      }
+                      ),
+                  )
+                  ],
                 ),
               ),
-              
             );
           },
         );
@@ -357,7 +323,11 @@ class _CustomListTileVideosState extends State<CustomListTileVideos> {
       default:
     }
   }
-
+  void addToPlaylist(String name) async {
+   final playlistToAdd = boxPlaylist.values.firstWhere(
+     (element) => element.name == name);
+     playlistToAdd.playList.add(widget.pathList[widget.index]);
+  }
   void deleteFavorites() async {
     // await boxFavorite.delete(widget.Customkey);
     // final userToDelete =
@@ -366,5 +336,7 @@ class _CustomListTileVideosState extends State<CustomListTileVideos> {
     final videotoremove = boxFavorite.values.firstWhere(
         (element) => element.favorite == widget.pathList[widget.index]);
     await videotoremove.delete();
+    
   }
+
 }
