@@ -72,8 +72,43 @@ class _PlayListScreenState extends State<PlayListScreen> {
                           onTap: () {
                             Navigator.of(context).push(MaterialPageRoute(
                                 builder: (ctx) => PlayListScreenInner(
-                                    name: _playListNames[index].name.toString(),
-                                    paths: viewList)));
+                                    name: _playListNames[index].name,
+                                    )));
+                          },
+                          onLongPress: (){
+                            showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: const Text("Delete"),
+                            content: const Text("Do you want to remove it?"),
+                            actions: [
+                              TextButton(
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                  child: const Text("No")),
+                              TextButton(
+                                  onPressed: () {
+                                    deletePlaylist(
+                                        _playListNames[index].name.toString());
+                                    Navigator.of(context).pop();
+                                    
+                                    
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                        const SnackBar(
+                                            duration: Duration(seconds: 1),
+                                            behavior: SnackBarBehavior.floating,
+                                            margin:
+                                                EdgeInsets.only(bottom: 80.0),
+                                            content:
+                                                Text("Removed Successfully")));
+                                  },
+                                  child: const Text("Yes"))
+                            ],
+                          );
+                        },
+                      );
                           },
                           child: ListTile(
                             title: Text(
@@ -225,89 +260,19 @@ class _PlayListScreenState extends State<PlayListScreen> {
               ),
             ],
           );
-          // return ListView.builder(
-          //     itemCount: _playListNames.length,
-          //     itemBuilder: (BuildContext context, int index) {
-          //       return _playListNames.isEmpty
-          //           ? Center(
-          //               child: Text('data'),
-          //             )
-          //           : ListTile(
-          //               title: Text(
-          //                 _playListNames[index].name.toString(),
-          //                 style: TextStyle(
-          //                   fontFamily: 'Poppins',
-          //                   fontSize: 18,
-          //                   fontWeight: FontWeight.bold,
-          //                 ),
-          //               ),
-          //               leading: Icon(MyFlutterApp.video_library),
-          //             );
-          //     });
+        
         },
       ),
 
-      // body: ValueListenableBuilder(
-      //     valueListenable: boxFavorites.listenable(),
-      //     builder: (BuildContext context, Box<Favorites> value, Widget? child) {
-      //       List<Favorites> videopaths = value.values.toList();
-      //       print('ivde aanooov favorite videos  ${videopaths}');
-      //       for (var i = 0; i < videopaths.length; i++) {
-      //         // keyList.add(videopaths[i].key);
-      //
-      //         key = videopaths[i].key;
-      //         _pathList.add(videopaths[i].favorite);
-      //         thumbs.add(videopaths[i].thumb);
-      //       }
-      //       return ListView.builder(
-      //         // physics: NeverScrollableScrollPhysics(),
-      //         itemCount: _pathList.length,
-      //         itemBuilder: (BuildContext context, int index) {
-      //           return CustomListTileVideos(
-      //             subtite: false,
-      //             trailicon: true,
-      //             index: index,
-      //             text: _pathList[index].split('/').last,
-      //             url: thumbs[index],
-      //             folderName: '',
-      //             pathList: _pathList,
-      //             Customkey: key,
-      //             isFavorite: isFavorite,
-      //             voidCallback: (){
-      //               // deleteFavorites();
-      //               // boxFavorites.deleteAt(index);
-      //               // setState(() {
-      //               //
-      //               // });
-      //
-      //               // Navigator.pop(context);
-      //               // // boxFavorite.get(widget.Customkey);
-      //               // // Navigator.of(context).push(MaterialPageRoute(
-      //               // //     builder: (context) => AllVideoList()));
-      //               // await Navigator.of(context).push(MaterialPageRoute(
-      //               //     builder: (context) => FavoriteVideoList()));
-      //               // setState(() {});
-      //
-      //               Navigator.pop(context);
-      //
-      //               ScaffoldMessenger.of(context).showSnackBar(
-      //                   const SnackBar(
-      //                       content: Text("Removed Successfully")));
-      //             },
-      //           );
-      //         },
-      //       );
-      //     }),
-      // body: ListView.builder(
-      //   itemCount: file_names.length,
-      //   itemBuilder: (BuildContext context, int index) {
-      //     return CustomListTileVideos(
-      //         subtite: false, trailicon: true, index: index, text: file_names[index],url: file_url[index],);
-      //   },
-      // ),
+     
     );
   }
 
+  void deletePlaylist(String text) async {
+    final videotoremove = boxPlaylist.values
+        .firstWhere((element) => element.name == text);
+    await videotoremove.delete();
+  }
   bool nameCheck(String text) {
     List<PlayList> _list = Hive.box<PlayList>(playlistBox).values.toList();
     bool check = false;

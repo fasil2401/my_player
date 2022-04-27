@@ -35,3 +35,12 @@ class PlayList extends HiveObject {
 
   PlayList({required this.playList, required this.name,});
 }
+@HiveType(typeId: 3)
+class PlayListVideos extends HiveObject {
+  @HiveField(0)
+  String id;
+
+  @HiveField(1)
+  String path;
+  PlayListVideos({required this.path, required this.id,});
+}

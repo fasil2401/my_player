@@ -25,9 +25,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
               leadicon: MyFlutterApp.share,
               text: 'Share App',
             ),
-            SettingsTile(
-              leadicon: MyFlutterApp.info_outline,
-              text: 'About App',
+            GestureDetector(
+              onTap: () {
+                _aboutUs();
+              },
+              child: SettingsTile(
+                leadicon: MyFlutterApp.info_outline,
+                text: 'About App',
+              ),
             ),
             SettingsTile(
               leadicon: MyFlutterApp.notifications,
@@ -36,6 +41,29 @@ class _SettingsScreenState extends State<SettingsScreen> {
           ],
         ),
       ),
+    );
+  }
+
+  void _aboutUs() {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return const AlertDialog(
+          title: Center(
+              child: Text(
+            'About Me',
+            style: TextStyle(fontFamily: "Poppins", fontSize: 21, fontWeight: FontWeight.bold),
+          )),
+          content: Text( 
+            'I am Salman Salim from Kerala, India. I am passionate in building application. This app is developed in Flutter',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              
+              fontFamily: "Poppins", 
+              fontSize: 18, ),
+          ),
+        );
+      },
     );
   }
 }

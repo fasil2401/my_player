@@ -1,6 +1,6 @@
-import 'dart:convert';
-import 'dart:io';
-import 'dart:typed_data';
+// import 'dart:convert';
+// import 'dart:io';
+// import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -53,6 +53,7 @@ class _CustomListTileVideosState extends State<CustomListTileVideos> {
   var boxVideos = Hive.box<Videos>(videoBox);
   var boxFavorite = Hive.box<Favorites>(favoriteBox);
   var boxPlaylist = Hive.box<PlayList>(playlistBox);
+  var boxPlaylistVideo = Hive.box<PlayListVideos>(playlistVideoBox);
   List<String> _playListNames = [];
 
   @override
@@ -286,10 +287,11 @@ class _CustomListTileVideosState extends State<CustomListTileVideos> {
                                 )
                               : InkWell(
                                 onTap: () {
-                                  addToPlaylist(_playListNames[index].name);
+                                  boxPlaylistVideo.add(PlayListVideos(path: widget.pathList[widget.index], id: _playListNames[index].name));
+                                  // addToPlaylist(_playListNames[index].name);
                                   //  _playListNames[index].playList.add(widget.pathList[widget.index]);
                                   Navigator.of(context).pop();
-                                   print('path ${widget.pathList[widget.index]} Addeddd to ${_playListNames[index].name.toString()}');
+                                   print('path ${widget.pathList[widget.index]} Addeddd to ${_playListNames[index].name}');
 
                                 },
                                 child: ListTile(
@@ -323,11 +325,8 @@ class _CustomListTileVideosState extends State<CustomListTileVideos> {
       default:
     }
   }
-  void addToPlaylist(String name) async {
-   final playlistToAdd = boxPlaylist.values.firstWhere(
-     (element) => element.name == name);
-     playlistToAdd.playList.add(widget.pathList[widget.index]);
-  }
+  
+ 
   void deleteFavorites() async {
     // await boxFavorite.delete(widget.Customkey);
     // final userToDelete =
