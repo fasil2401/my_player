@@ -12,6 +12,7 @@ import 'package:my_player/Screens/splash/splash.dart';
 import 'package:flutter/services.dart';
 import 'package:my_player/model/model.dart';
 import 'package:my_player/provider/theme_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
 
@@ -47,6 +48,7 @@ void main() async {
   await Hive.openBox<Favorites>(favoriteBox);
   await Hive.openBox<PlayList>(playlistBox);
   await Hive.openBox<PlayListVideos>(playlistVideoBox);
+  requestPermission();
 
 
   runApp(const MyApp());
@@ -54,7 +56,12 @@ void main() async {
 
   runApp(const MyApp());
 }
-
+void requestPermission() async {
+    var requestStatus = await Permission.storage.status;
+    if (requestStatus.isDenied) {
+      Permission.storage.request();
+    }
+  }
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
