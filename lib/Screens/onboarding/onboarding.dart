@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hive/hive.dart';
 import 'package:my_player/Screens/navigation_screens/navigation.dart';
+import 'package:my_player/Screens/onboarding/fetching_screen.dart';
 import 'package:my_player/Screens/onboarding/widgets.dart';
 import 'package:my_player/Screens/navigation_screens/settings.dart';
 import 'package:my_player/bottom_navigation/screenhome.dart';
@@ -23,13 +24,13 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
   List<String> _pathList = [];
   List thumbs = [];
   var boxVideos = Hive.box<Videos>(videoBox);
-  @override
-  void initState() {
-    getFiles();
-    // synchronise();
-    // TODO: implement initState
-    super.initState();
-  }
+  // @override
+  // void initState() {
+  //   getFiles();
+  //   // synchronise();
+  //   // TODO: implement initState
+  //   super.initState();
+  // }
 
   // void synchronise() async {
   //   await getFiles();
@@ -203,10 +204,10 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
   }
 
   onBoard(BuildContext ctx) async {
-    await getThumb();
+    // await getThumb();
     final _sharedPrefs = await SharedPreferences.getInstance();
     await _sharedPrefs.setBool(first_time, true);
     Navigator.of(ctx)
-        .pushReplacement(MaterialPageRoute(builder: (context) => ScreenHome()));
+        .pushReplacement(MaterialPageRoute(builder: (context) => FetchingScreen()));
   }
 }

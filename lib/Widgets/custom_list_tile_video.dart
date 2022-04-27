@@ -127,7 +127,7 @@ class _CustomListTileVideosState extends State<CustomListTileVideos> {
                           maxLines: 3,
                           style: TextStyle(
                             fontFamily: "Poppins",
-                            fontSize: MediaQuery.of(context).size.width * 0.046,
+                            fontSize: MediaQuery.of(context).size.width * 0.047,
                           ),
                         ),
                       ),
