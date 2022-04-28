@@ -35,8 +35,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
               ),
             ),
             SettingsTile(
-              leadicon: MyFlutterApp.notifications,
-              text: 'Notifications',
+              leadicon: Icons.rate_review_outlined,
+              text: 'Write a review',
+            ),
+            SettingsTile(
+              leadicon: Icons.star_border_outlined,
+              text: 'Rate App',
             ),
           ],
         ),
