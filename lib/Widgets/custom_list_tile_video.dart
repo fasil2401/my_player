@@ -319,7 +319,7 @@ class _CustomListTileVideosState extends State<CustomListTileVideos> {
               contentPadding: const EdgeInsets.only(top: 6),
               content: SizedBox(
                 width: MediaQuery.of(context).size.width,
-                // height: MediaQuery.of(context).size.height * 0.4,
+                height: MediaQuery.of(context).size.height * 0.3,
                 child: Column(
                   children: [
                     Row(

@@ -22,14 +22,15 @@ class SettingsTile extends StatelessWidget {
               children:  [
                 Icon(
                   leadicon,
-                  size: 26,
+                  size: MediaQuery.of(context).size.width * 0.055,
                 ),
                const SizedBox(
                   width: 20,
                 ),
                 Text(
                   text,
-                  style:const TextStyle(fontFamily: "Poppins", fontSize: 21),
+                  style: TextStyle(fontFamily: "Poppins", 
+                  fontSize: MediaQuery.of(context).size.width * 0.047),
                 )
               ],
             ),
