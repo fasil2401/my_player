@@ -39,7 +39,8 @@ class _FavoriteVideoListState extends State<FavoriteVideoList> {
   // }
   @override
   void initState() {
-    setState(() {});
+    // setState(() {});
+    checkingList();
     // TODO: implement initState
     super.initState();
   }
@@ -110,6 +111,33 @@ class _FavoriteVideoListState extends State<FavoriteVideoList> {
       //   },
       // ),
     );
+  }
+
+ void checkingList(){
+   List<String> favlist =[];
+   List<String> videolist =[];
+   List<Favorites> _listFav = Hive.box<Favorites>(favoriteBox).values.toList();
+   List<Videos> _listVideo = Hive.box<Videos>(videoBox).values.toList();
+   for (var i = 0; i < _listFav.length; i++) {
+    favlist.add(_listFav[i].favorite);
+   }
+   for (var i = 0; i < _listVideo.length; i++) {
+     videolist.add(_listVideo[i].paths);
+   }
+   favlist.forEach((element) { if (!videolist.contains(element)){
+     deleteFavorites(element);
+   }});
+ } 
+ void deleteFavorites(String text) async {
+    // await boxFavorite.delete(widget.Customkey);
+    // final userToDelete =
+    // await _userBox.values.firstWhere((element) => element.id == id);
+    // await userToDelete.delete();
+    final videotoremove = boxFavorites.values.firstWhere(
+        (element) => element.favorite == text
+        );
+    await videotoremove.delete();
+    
   }
 
 }

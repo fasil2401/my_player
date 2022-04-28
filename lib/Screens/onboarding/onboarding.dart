@@ -208,6 +208,6 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
     final _sharedPrefs = await SharedPreferences.getInstance();
     await _sharedPrefs.setBool(first_time, true);
     Navigator.of(ctx)
-        .pushReplacement(MaterialPageRoute(builder: (context) => FetchingScreen()));
+        .pushReplacement(MaterialPageRoute(builder: (context) => ScreenHome(isSatrting: 'yes',)));
   }
 }

@@ -84,8 +84,8 @@ class _PlayListScreenInnerState extends State<PlayListScreenInner> {
                                     deletePlaylistVideo(
                                         _playList[index].toString());
                                     Navigator.of(context).pop();
-                                    Navigator.of(context).pop();
-                                    
+                                    // Navigator.of(context).pop();
+                                    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => PlayListScreenInner(name: widget.name)));
                                     ScaffoldMessenger.of(context).showSnackBar(
                                         const SnackBar(
                                             duration: Duration(seconds: 1),
@@ -141,5 +141,7 @@ class _PlayListScreenInnerState extends State<PlayListScreenInner> {
     final videotoremove = boxPlaylistVideo.values
         .firstWhere((element) => element.path == thispath);
     await videotoremove.delete();
+    getVideos();
+
   }
 }

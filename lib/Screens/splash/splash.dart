@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_player/Screens/navigation_screens/navigation.dart';
+import 'package:my_player/Screens/onboarding/fetching_screen.dart';
 import 'package:my_player/Screens/onboarding/onboarding.dart';
 import 'package:my_player/Screens/onboarding/widgets.dart';
 import 'package:my_player/Screens/navigation_screens/settings.dart';
@@ -59,7 +60,7 @@ class _SplashScreenState extends State<SplashScreen>{
     else {
       await Future.delayed(const Duration(seconds: 2));
       Navigator.of(context)
-          .pushReplacement(MaterialPageRoute(builder: (ctx1) => ScreenHome()));
+          .pushReplacement(MaterialPageRoute(builder: (ctx1) => ScreenHome(isSatrting: 'yes',)));
     }
   }
 }

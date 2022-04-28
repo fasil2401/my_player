@@ -116,6 +116,6 @@ class _FetchingScreenState extends State<FetchingScreen> {
       // print(listBox[i]);
     }
     Navigator.of(context)
-        .pushReplacement(MaterialPageRoute(builder: (context) => ScreenHome()));
+    .pushReplacement(MaterialPageRoute(builder: (context) => ScreenHome(isSatrting: 'yes',)));
   }
 }

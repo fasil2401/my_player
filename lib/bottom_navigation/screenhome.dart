@@ -14,9 +14,12 @@ import 'package:video_thumbnail/video_thumbnail.dart';
 import '../provider/search_files.dart';
 
 class ScreenHome extends StatefulWidget {
-   ScreenHome({
+  ScreenHome({
     Key? key,
-  }) : super(key: key);
+  required this.isSatrting ,this.existPathList}) : super(key: key);
+
+  List<String>?existPathList = [];
+  String isSatrting;
 
   static ValueNotifier<int> selectedIndexNotifier = ValueNotifier(0);
 
@@ -28,36 +31,19 @@ class _ScreenHomeState extends State<ScreenHome> {
   List<String> _pathList = [];
   List thumbs = [];
   var boxVideos = Hive.box<Videos>(videoBox);
-  final _pages =  [
+  final _pages = [
     FolderScreen(),
     // AllVideoList(),
     PlayListScreen(),
     FavoriteVideoList(),
     SettingsScreen(),
-
   ];
-  Future getThumb() async {
-    print(_pathList);
-    // var listBox = boxVideos.values.toList();
-    for (var i = 0; i < _pathList.length; i++) {
-      var key = (await VideoThumbnail.thumbnailData(
-        video: _pathList[i],
-        imageFormat: ImageFormat.JPEG,
-        maxWidth: 128,
-        quality: 25,
-      ));
-      thumbs.add(key);
-      setState(() {});
-      print('hi ${_pathList[i]}');
-      boxVideos.put(i, Videos(paths: _pathList[i], thumb: thumbs[i],fav:  false));
-
-      // print(listBox[i]);
-    }
-  }
   Future getFiles() async {
+    build(context);
+    print('Adding started');
     // await Permission.storage.request();
     final value = '.mp4,.mkv,.webm'
-    // final value = '.mp4'
+        // final value = '.mp4'
         .trim()
         .replaceAll(' ', '')
         .split(',');
@@ -66,29 +52,68 @@ class _ScreenHomeState extends State<ScreenHome> {
     }
     SearchFilesInStorage.searchInStorage(
       value,
-          (List<String> data) {
+      (List<String> data) {
         _pathList.clear();
-        // print(data);
-        setState(() {
-          _pathList.addAll(data);
-          // for (var i = 0; i < _pathList.length; i++) {
-          //   List<String> folder = _pathList[i].split('/').toList();
-          //   String name = folder[folder.length - 2];
-          //   //  folderName.add(name);
-          // }
-          // folderNameFinal = folderName.toSet().toList();
-          // folderNameFinal.remove('0');
-          // pathListMain= _pathList;
-        });
+         _pathList.addAll(data);
+
+        SyncList();
       },
-          (error) {},
+      (error) {},
     );
   }
 
-  Future  sychronise() async{
-     getFiles();
+  Future getThumb() async {
+    
+    print(_pathList);
+    // var listBox = boxVideos.values.toList();
+    //  await boxVideos.clear();
+    for (var i = 0; i < _pathList.length; i++) {
+      var key = (await VideoThumbnail.thumbnailData(
+        video: _pathList[i],
+        imageFormat: ImageFormat.JPEG,
+        maxWidth: 128,
+        quality: 25,
+      ));
+      thumbs.add(key);
+      // setState(() {});
+      print('hi ${_pathList[i]}');
 
+      // print(listBox[i]);
+    }
+    SyncListThumb();
   }
+
+  Future SyncList() async {
+    await boxVideos.clear();
+    for (var i = 0; i < _pathList.length; i++) {
+      boxVideos.put(
+          i, Videos(paths: _pathList[i], thumb: null, fav: false));
+    }
+    getThumb();
+  }
+   Future SyncListThumb () async {
+    // await boxVideos.clear();
+    for (var i = 0; i < _pathList.length; i++) {
+      boxVideos.put(
+          i, Videos(paths: _pathList[i], thumb: thumbs[i], fav: false));
+    }
+   setState(() {
+     
+   });
+  }
+
+
+  @override
+  void initState() {
+    // Sync();
+    if (widget.isSatrting == 'yes') {
+      getFiles();
+    }
+    
+    // TODO: implement initState
+    super.initState();
+  }
+
 // @override
 //   void dispose() {
 //     // TODO: implement dispose
@@ -101,8 +126,16 @@ class _ScreenHomeState extends State<ScreenHome> {
 //     super.initState();
 //     sychronise();
 //   }
+void Sync(){
+  build(context);
+  getFiles();
+ 
+}
   @override
   Widget build(BuildContext context) {
+    setState(() {
+      restarting == false;
+    });
     SystemChrome.setSystemUIOverlayStyle(
         const SystemUiOverlayStyle(statusBarIconBrightness: Brightness.light));
     return SafeArea(
@@ -123,5 +156,12 @@ class _ScreenHomeState extends State<ScreenHome> {
             ],
           )),
     );
+    
   }
+  // @override
+  // void dispose() {
+  //   Sync();
+  //   // TODO: implement dispose
+  //   super.dispose();
+  // }
 }

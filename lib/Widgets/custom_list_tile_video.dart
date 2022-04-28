@@ -97,7 +97,10 @@ class _CustomListTileVideosState extends State<CustomListTileVideos> {
                           borderRadius: BorderRadius.circular(6.0),
                           image: DecorationImage(
                             fit: BoxFit.fitHeight,
-                            image: MemoryImage(widget.url),
+                            image: widget.url == null
+                                ? AssetImage('assets/images/icon.png')
+                                    as ImageProvider
+                                : MemoryImage(widget.url),
                           ),
                         ),
                       ),
@@ -112,7 +115,6 @@ class _CustomListTileVideosState extends State<CustomListTileVideos> {
                       ),
                     ],
                   ),
-
                   const SizedBox(
                     width: 15,
                   ),
@@ -212,11 +214,13 @@ class _CustomListTileVideosState extends State<CustomListTileVideos> {
                         deleteFavorites();
                         Navigator.of(context).pop();
                         Navigator.of(context).pushReplacement(MaterialPageRoute(
-                            builder: (context) => ScreenHome()));
+                            builder: (context) => ScreenHome(
+                                  isSatrting: 'no',
+                                )));
 
                         ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
-                              duration:  Duration(seconds: 1),
+                                duration: Duration(seconds: 1),
                                 behavior: SnackBarBehavior.floating,
                                 margin: EdgeInsets.only(bottom: 80.0),
                                 content: Text("Removed Successfully")));
@@ -237,7 +241,7 @@ class _CustomListTileVideosState extends State<CustomListTileVideos> {
             ),
           );
           ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-            duration:  Duration(seconds: 1),
+              duration: Duration(seconds: 1),
               behavior: SnackBarBehavior.floating,
               margin: EdgeInsets.only(bottom: 70.0),
               content: Text("Added to favorites")));
@@ -270,46 +274,55 @@ class _CustomListTileVideosState extends State<CustomListTileVideos> {
                         ),
                       ],
                     ),
-                   const SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
-                  Expanded(
-                    child: ValueListenableBuilder(
-                      valueListenable: boxPlaylist.listenable(), 
-                      builder: (BuildContext context, Box<PlayList> value, Widget? child){
-                        List<PlayList> _playListNames = value.values.toList();
-                        return ListView.builder(
-                          itemCount: _playListNames.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            return _playListNames.isEmpty
-                              ?const Center(
-                                  child: Text('data'),
-                                )
-                              : InkWell(
-                                onTap: () {
-                                  boxPlaylistVideo.add(PlayListVideos(path: widget.pathList[widget.index], id: _playListNames[index].name));
-                                  // addToPlaylist(_playListNames[index].name);
-                                  //  _playListNames[index].playList.add(widget.pathList[widget.index]);
-                                  Navigator.of(context).pop();
-                                   print('path ${widget.pathList[widget.index]} Addeddd to ${_playListNames[index].name}');
-
-                                },
-                                child: ListTile(
-                                      title: Text(
-                                        _playListNames[index].name.toString(),
-                                        style:const TextStyle(
-                                          fontFamily: 'Poppins',
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.w400,
+                    Expanded(
+                      child: ValueListenableBuilder(
+                          valueListenable: boxPlaylist.listenable(),
+                          builder: (BuildContext context, Box<PlayList> value,
+                              Widget? child) {
+                            List<PlayList> _playListNames =
+                                value.values.toList();
+                            return ListView.builder(
+                              itemCount: _playListNames.length,
+                              itemBuilder: (BuildContext context, int index) {
+                                return _playListNames.isEmpty
+                                    ? const Center(
+                                        child: Text('data'),
+                                      )
+                                    : InkWell(
+                                        onTap: () {
+                                          checking(widget.pathList[widget.index], _playListNames[index].name);
+                                          // boxPlaylistVideo.add(PlayListVideos(
+                                          //     path:
+                                          //         widget.pathList[widget.index],
+                                          //     id: _playListNames[index].name));
+                                          // addToPlaylist(_playListNames[index].name);
+                                          //  _playListNames[index].playList.add(widget.pathList[widget.index]);
+                                          Navigator.of(context).pop();
+                                          print(
+                                              'path ${widget.pathList[widget.index]} Addeddd to ${_playListNames[index].name}');
+                                        },
+                                        child: ListTile(
+                                          title: Text(
+                                            _playListNames[index]
+                                                .name
+                                                .toString(),
+                                            style: const TextStyle(
+                                              fontFamily: 'Poppins',
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.w400,
+                                            ),
+                                          ),
+                                          leading: const Icon(
+                                              MyFlutterApp.video_library),
                                         ),
-                                      ),
-                                      leading:const Icon(MyFlutterApp.video_library),
-                                    ),
-                              );
-                          },);
-                      }
-                      ),
-                  )
+                                      );
+                              },
+                            );
+                          }),
+                    )
                   ],
                 ),
               ),
@@ -325,8 +338,25 @@ class _CustomListTileVideosState extends State<CustomListTileVideos> {
       default:
     }
   }
-  
- 
+
+  void checking(String path, String id) {
+    List<String> videolist = [];
+    List<PlayListVideos> _listplayVideo =
+        Hive.box<PlayListVideos>(playlistVideoBox).values.toList();
+    for (var i = 0; i < _listplayVideo.length; i++) {
+      videolist.add(_listplayVideo[i].path);
+    }
+    if (!videolist.contains(path)) {
+      boxPlaylistVideo.add(PlayListVideos(path: path, id: id));
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          duration: Duration(seconds: 1),
+          behavior: SnackBarBehavior.floating,
+          margin: EdgeInsets.only(bottom: 70.0),
+          content: Text("Already in list")));
+    }
+  }
+
   void deleteFavorites() async {
     // await boxFavorite.delete(widget.Customkey);
     // final userToDelete =
@@ -335,7 +365,5 @@ class _CustomListTileVideosState extends State<CustomListTileVideos> {
     final videotoremove = boxFavorite.values.firstWhere(
         (element) => element.favorite == widget.pathList[widget.index]);
     await videotoremove.delete();
-    
   }
-
 }

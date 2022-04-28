@@ -25,8 +25,10 @@ const videoBox = 'boxVideos';
 const favoriteBox = 'boxFavorites';
 const playlistBox = 'boxPlaylist';
 const playlistVideoBox = 'boxPlaylistVideo';
+bool restarting = true;
 
 void main() async {
+  restarting =true;
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
     // systemNavigationBarColor: Colors.blue, // navigation bar color
     statusBarColor: Color(0xFF100374), // status bar color
