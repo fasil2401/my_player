@@ -251,6 +251,67 @@ class _CustomListTileVideosState extends State<CustomListTileVideos> {
 
       case MenuListItems.itemPLaylist:
         // Navigator.of(context).pop();
+        // showDialog(
+        //     context: context,
+        //     builder: (BuildContext context) {
+        //       return AlertDialog(
+        //         contentPadding: const EdgeInsets.only(top: 6),
+        //         title: Text(
+        //           'Playlists',
+        //           style: TextStyle(
+        //             fontFamily: 'Poppins',
+        //             fontSize: 18,
+        //             fontWeight: FontWeight.bold,
+        //           ),
+        //         ),
+        //         content: Expanded(
+        //           child: ValueListenableBuilder(
+        //                     valueListenable: boxPlaylist.listenable(),
+        //                     builder: (BuildContext context, Box<PlayList> value,
+        //                         Widget? child) {
+        //                       List<PlayList> _playListNames =
+        //                           value.values.toList();
+        //                       return ListView.builder(
+        //                         itemCount: _playListNames.length,
+        //                         itemBuilder: (BuildContext context, int index) {
+        //                           return _playListNames.isEmpty
+        //                               ? const Center(
+        //                                   child: Text('data'),
+        //                                 )
+        //                               : InkWell(
+        //                                   onTap: () {
+        //                                     checking(widget.pathList[widget.index], _playListNames[index].name);
+        //                                     // boxPlaylistVideo.add(PlayListVideos(
+        //                                     //     path:
+        //                                     //         widget.pathList[widget.index],
+        //                                     //     id: _playListNames[index].name));
+        //                                     // addToPlaylist(_playListNames[index].name);
+        //                                     //  _playListNames[index].playList.add(widget.pathList[widget.index]);
+        //                                     Navigator.of(context).pop();
+        //                                     print(
+        //                                         'path ${widget.pathList[widget.index]} Addeddd to ${_playListNames[index].name}');
+        //                                   },
+        //                                   child: ListTile(
+        //                                     title: Text(
+        //                                       _playListNames[index]
+        //                                           .name
+        //                                           .toString(),
+        //                                       style: const TextStyle(
+        //                                         fontFamily: 'Poppins',
+        //                                         fontSize: 18,
+        //                                         fontWeight: FontWeight.w400,
+        //                                       ),
+        //                                     ),
+        //                                     leading: const Icon(
+        //                                         MyFlutterApp.video_library),
+        //                                   ),
+        //                                 );
+        //                         },
+        //                       );
+        //                     }),
+        //         ),
+        //       );
+        //     });
         showDialog(
           context: context,
           builder: (BuildContext context) {
@@ -258,7 +319,7 @@ class _CustomListTileVideosState extends State<CustomListTileVideos> {
               contentPadding: const EdgeInsets.only(top: 6),
               content: SizedBox(
                 width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height * 0.4,
+                // height: MediaQuery.of(context).size.height * 0.4,
                 child: Column(
                   children: [
                     Row(
