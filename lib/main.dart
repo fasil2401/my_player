@@ -28,7 +28,7 @@ const playlistVideoBox = 'boxPlaylistVideo';
 bool restarting = true;
 
 void main() async {
-  restarting =true;
+  restarting = true;
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
     // systemNavigationBarColor: Colors.blue, // navigation bar color
     statusBarColor: Color(0xFF100374), // status bar color
@@ -44,26 +44,28 @@ void main() async {
   Hive.registerAdapter(PlayListAdapter());
   Hive.registerAdapter(PlayListVideosAdapter());
 
-
-  
   await Hive.openBox<Videos>(videoBox);
   await Hive.openBox<Favorites>(favoriteBox);
   await Hive.openBox<PlayList>(playlistBox);
   await Hive.openBox<PlayListVideos>(playlistVideoBox);
   requestPermission();
 
-
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+  ]);
   runApp(const MyApp());
   await Hive.openBox('pathlist');
 
   runApp(const MyApp());
 }
+
 void requestPermission() async {
-    var requestStatus = await Permission.storage.status;
-    if (requestStatus.isDenied) {
-      Permission.storage.request();
-    }
+  var requestStatus = await Permission.storage.status;
+  if (requestStatus.isDenied) {
+    Permission.storage.request();
   }
+}
+
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 

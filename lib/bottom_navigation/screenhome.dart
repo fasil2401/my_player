@@ -97,9 +97,9 @@ class _ScreenHomeState extends State<ScreenHome> {
       boxVideos.put(
           i, Videos(paths: _pathList[i], thumb: thumbs[i], fav: false));
     }
-   setState(() {
+  //  setState(() {
      
-   });
+  //  });
   }
 
 
