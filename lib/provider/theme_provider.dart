@@ -1,9 +1,11 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 
 late Color iconColor;
 
 class ThemeProvider extends ChangeNotifier {
-  ThemeMode themeMode = ThemeMode.system;
+  ThemeMode themeMode = ThemeMode.light;
   bool get isDarkMode => themeMode == ThemeMode.dark;
 
   void toggleTheme(bool isOn) {
@@ -16,17 +18,70 @@ class MyThemes {
   
   static final darkTheme = ThemeData(
     
-    scaffoldBackgroundColor:const Color.fromARGB(238, 64, 64, 65),
-    colorScheme: const ColorScheme.dark().copyWith(secondary: Colors.transparent),
-    iconTheme: IconThemeData(color: Colors.purple.shade200, opacity: 0.8),
-    listTileTheme:const ListTileThemeData(
-      iconColor: Colors.purple,
+    scaffoldBackgroundColor: Color.fromARGB(241, 48, 48, 48),
+    colorScheme: const ColorScheme.light().copyWith(secondary: Colors.transparent),
+    iconTheme:const IconThemeData(color: Color.fromARGB(255, 124, 124, 124)),
+    
+    listTileTheme: ListTileThemeData(
+      textColor: Colors.white.withOpacity(0.8),
+      iconColor: Color.fromARGB(255, 124, 124, 124)
     ),
-    backgroundColor: const Color.fromARGB(255, 30, 30, 31),
-     bottomNavigationBarTheme: BottomNavigationBarThemeData(
-      unselectedIconTheme:  IconThemeData(color: Colors.purple.shade200, opacity: 0.8),
-      selectedIconTheme:const IconThemeData(color: Colors.purple),
-      backgroundColor: Colors.red
+     textTheme: TextTheme(
+      //  bodyText1: TextStyle(
+      //    color: Colors.white
+      //  ),
+        bodyText2: TextStyle(
+         color: Colors.white.withOpacity(0.8)
+       )
+     ),
+    buttonTheme: ButtonThemeData(
+      buttonColor: Colors.black
+    ),
+    inputDecorationTheme: InputDecorationTheme(
+      isDense: true,
+      counterStyle: TextStyle(
+        color: Colors.white.withOpacity(0.8),
+      ),
+      helperStyle: TextStyle(
+         color: Colors.white.withOpacity(0.8),
+      ),
+      hintStyle: TextStyle(
+        color: Colors.white.withOpacity(0.8),
+      )
+    ),
+    elevatedButtonTheme: ElevatedButtonThemeData(
+      style: ElevatedButton.styleFrom(
+        primary: Colors.black,
+        textStyle: TextStyle(
+          color: Colors.white.withOpacity(0.8),
+        )
+      )
+    ),
+    floatingActionButtonTheme: FloatingActionButtonThemeData(
+      backgroundColor: Colors.black
+    ),
+    appBarTheme: AppBarTheme(
+      titleTextStyle: TextStyle(
+        color: Colors.white.withOpacity(0.8)
+      ),
+      backgroundColor: const Color.fromARGB(255, 22, 22, 22) ,
+  
+    ),
+    // dialogBackgroundColor: Color.fromARGB(241, 48, 48, 48),
+    dialogTheme: DialogTheme(
+    
+      contentTextStyle: TextStyle(
+        color: Colors.white.withOpacity(0.8)
+      ),
+      backgroundColor: Color.fromARGB(241, 48, 48, 48),
+      titleTextStyle: TextStyle(
+        color: Colors.white.withOpacity(0.8)
+      )
+    ),
+    bottomNavigationBarTheme:const BottomNavigationBarThemeData(
+      unselectedIconTheme:  IconThemeData(color: Color.fromARGB(255, 177, 177, 177)),
+      selectedIconTheme: IconThemeData(color: Color.fromARGB(255, 255, 255, 255)),
+      backgroundColor: Color.fromARGB(255, 0, 0, 0)
     )
   );
   static final lightTheme = ThemeData(
@@ -34,17 +89,30 @@ class MyThemes {
     colorScheme: const ColorScheme.light().copyWith(secondary: Colors.transparent),
     iconTheme:const IconThemeData(color: Color(0xFF837DAB)),
     listTileTheme:const ListTileThemeData(
-      iconColor:  Color(0xFF837DAB),
+      
+      iconColor:  Color(0xFF100374)
     ),
     textTheme:const TextTheme(),
     appBarTheme:const AppBarTheme(
       backgroundColor:  Color(0xFF100374) ,
   
     ),
-    bottomNavigationBarTheme:const BottomNavigationBarThemeData(
+    elevatedButtonTheme: ElevatedButtonThemeData(
+      style: ElevatedButton.styleFrom(
+        primary: Color(0xFF100374),
+        textStyle: TextStyle(
+          color: Colors.white.withOpacity(0.8),
+        )
+      )
+    ),
+    
+    floatingActionButtonTheme: FloatingActionButtonThemeData(
+      backgroundColor: Color(0xFF100374)
+    ),
+    bottomNavigationBarTheme: BottomNavigationBarThemeData(
       unselectedIconTheme:  IconThemeData(color: Color(0xFF837DAB)),
       selectedIconTheme: IconThemeData(color: Color(0xFF100374)),
-      backgroundColor: Colors.grey
+      backgroundColor: Colors.white,
     )
   );
 }

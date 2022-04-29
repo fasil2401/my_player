@@ -82,7 +82,7 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           title: 'My Player',
           theme: MyThemes.lightTheme,
-          darkTheme: MyThemes.lightTheme,
+          darkTheme: MyThemes.darkTheme,
           home: const SplashScreen(),
         );
       },

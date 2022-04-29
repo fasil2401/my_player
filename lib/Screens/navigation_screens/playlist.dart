@@ -90,6 +90,7 @@ class _PlayListScreenState extends State<PlayListScreen> {
                                   color:const Color.fromARGB(255, 205, 224, 255),
                                 ),
                                 child: ListTile(
+                                  
                                   title: Text(
                                     _playListNames[index].name.toString(),
                                     style:  TextStyle(
@@ -100,7 +101,7 @@ class _PlayListScreenState extends State<PlayListScreen> {
                                     ),
                                   ),
                                   leading: const Icon(MyFlutterApp.video_library,
-                                  color: Color(0xFF100374),
+                                  // color: Color(0xFF100374),
                                   ),
                                 ),
                               ),
@@ -210,7 +211,7 @@ class _PlayListScreenState extends State<PlayListScreen> {
                                             }
                                           },
                                           style: ElevatedButton.styleFrom(
-                                            primary: const Color(0xFF100374),
+                                            // primary: const Color(0xFF100374),
                                             fixedSize: const Size(150, 50),
                                             shape: RoundedRectangleBorder(
                                               borderRadius:
@@ -236,7 +237,7 @@ class _PlayListScreenState extends State<PlayListScreen> {
                               );
                             });
                       },
-                      backgroundColor: const Color(0xFF100374),
+                      // backgroundColor: const Color(0xFF100374),
                       child: const Icon(
                         Icons.add,
                         size: 30,
