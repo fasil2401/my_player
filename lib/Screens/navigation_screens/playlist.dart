@@ -178,13 +178,8 @@ class _PlayListScreenState extends State<PlayListScreen> {
                                             if (nameController
                                                 .text.isNotEmpty) {
                                               await Hive.openBox("pathlist");
-
-                                              // await boxPlaylist.add(PlayList(
-                                              //     playList: _playList,
-                                              //     name: nameController.text));
-                                              //  createPlaylist(nameController.text,_playList);
                                               if (!nameCheck(
-                                                  nameController.text)) {
+                                                  nameController.text) && nameController.text != '' && nameController.text != null) {
                                                 await boxPlaylist.add(PlayList(
                                                     playList: _playList,
                                                     name: nameController.text));
