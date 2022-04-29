@@ -4,7 +4,7 @@
      <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
      <uses-permission android:name="android.permission.INTERNET"/>
    <application
-        android:label="Fly Payer"
+        android:label="Shadow Player"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

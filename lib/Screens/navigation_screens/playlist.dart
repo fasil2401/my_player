@@ -59,74 +59,57 @@ class _PlayListScreenState extends State<PlayListScreen> {
           List<PlayList> _playListNames = value.values.toList();
           return Stack(
             children: [
-              ListView.builder(
-                itemCount: _playListNames.length,
-                itemBuilder: (BuildContext context, int index) {
-                  List<String> viewList = _playListNames[index].playList;
+              Container(
+                height: MediaQuery.of(context).size.height * 0.8,
+                child: ListView.builder(
+                  itemCount: _playListNames.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    List<String> viewList = _playListNames[index].playList;
 
-                  return _playListNames.isEmpty
-                      ? const Center(
-                          child: Text('data'),
-                        )
-                      : GestureDetector(
-                          onTap: () {
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (ctx) => PlayListScreenInner(
-                                    name: _playListNames[index].name,
-                                    )));
-                          },
-                          onLongPress: (){
-                            showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return AlertDialog(
-                            title: const Text("Delete"),
-                            content: const Text("Do you want to remove it?"),
-                            actions: [
-                              TextButton(
-                                  onPressed: () {
-                                    Navigator.pop(context);
-                                  },
-                                  child: const Text("No")),
-                              TextButton(
-                                  onPressed: () {
-                                    deletePlaylist(
-                                        _playListNames[index].name.toString());
-                                    Navigator.of(context).pop();
-                                    
-                                    
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                        const SnackBar(
-                                            duration: Duration(seconds: 1),
-                                            behavior: SnackBarBehavior.floating,
-                                            margin:
-                                                EdgeInsets.only(bottom: 80.0),
-                                            content:
-                                                Text("Removed Successfully")));
-                                  },
-                                  child: const Text("Yes"))
-                            ],
-                          );
-                        },
-                      );
-                          },
-                          child: ListTile(
-                            title: Text(
-                              _playListNames[index].name.toString(),
-                              style: const TextStyle(
-                                fontFamily: 'Poppins',
-                                fontSize: 18,
-                                fontWeight: FontWeight.w400,
+                    return _playListNames.isEmpty
+                        ? const Center(
+                            child: Text('data'),
+                          )
+                        : GestureDetector(
+                            onTap: () {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (ctx) => PlayListScreenInner(
+                                        name: _playListNames[index].name,
+                                      )));
+                            },
+                            onLongPress: () {
+                              confirmation(context, _playListNames, index);
+                            },
+                            child: Padding(
+                              padding:  EdgeInsets.symmetric(horizontal: 12, vertical: 5),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  color: Color.fromARGB(255, 205, 224, 255),
+                                ),
+                                child: ListTile(
+                                  title: Text(
+                                    _playListNames[index].name.toString(),
+                                    style:  TextStyle(
+                                      color: Colors.black.withOpacity(0.8),
+                                      fontFamily: 'Poppins',
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                  leading:  Icon(MyFlutterApp.video_library,
+                                  color: Color(0xFF100374),
+                                  ),
+                                ),
                               ),
                             ),
-                            leading: const Icon(MyFlutterApp.video_library),
-                          ),
-                        );
-                },
+                          );
+                  },
+                ),
               ),
               Positioned(
                 // height: 10,
-                bottom: 80,
+                bottom: 10,
                 right: 20,
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -232,11 +215,14 @@ class _PlayListScreenState extends State<PlayListScreen> {
                                                   BorderRadius.circular(50),
                                             ),
                                           ),
-                                          child: const Text(
-                                            'Create Playlist',
+                                          child: Text(
+                                            'Create',
                                             style: TextStyle(
                                               fontFamily: 'Poppins',
-                                              fontSize: 18,
+                                              fontSize: MediaQuery.of(context)
+                                                      .size
+                                                      .width *
+                                                  0.047,
                                               fontWeight: FontWeight.bold,
                                             ),
                                           ),
@@ -260,19 +246,49 @@ class _PlayListScreenState extends State<PlayListScreen> {
               ),
             ],
           );
-        
         },
       ),
+    );
+  }
 
-     
+  Future<dynamic> confirmation(
+      BuildContext context, List<PlayList> _playListNames, int index) {
+    return showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text("Delete"),
+          content: const Text("Do you want to remove it?"),
+          actions: [
+            TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: const Text("No")),
+            TextButton(
+                onPressed: () {
+                  deletePlaylist(_playListNames[index].name.toString());
+                  Navigator.of(context).pop();
+
+                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                      duration: Duration(seconds: 1),
+                      behavior: SnackBarBehavior.floating,
+                      margin: EdgeInsets.only(bottom: 80.0),
+                      content: Text("Removed Successfully")));
+                },
+                child: const Text("Yes"))
+          ],
+        );
+      },
     );
   }
 
   void deletePlaylist(String text) async {
-    final videotoremove = boxPlaylist.values
-        .firstWhere((element) => element.name == text);
+    final videotoremove =
+        boxPlaylist.values.firstWhere((element) => element.name == text);
     await videotoremove.delete();
   }
+
   bool nameCheck(String text) {
     List<PlayList> _list = Hive.box<PlayList>(playlistBox).values.toList();
     bool check = false;

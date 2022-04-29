@@ -126,7 +126,7 @@ class _CustomListTileVideosState extends State<CustomListTileVideos> {
                         child: Text(
                           widget.text,
                           overflow: TextOverflow.clip,
-                          maxLines: 3,
+                          maxLines: 2,
                           style: TextStyle(
                             fontFamily: "Poppins",
                             fontSize: MediaQuery.of(context).size.width * 0.047,
@@ -354,7 +354,9 @@ class _CustomListTileVideosState extends State<CustomListTileVideos> {
                                       )
                                     : InkWell(
                                         onTap: () {
-                                          checking(widget.pathList[widget.index], _playListNames[index].name);
+                                          checking(
+                                              widget.pathList[widget.index],
+                                              _playListNames[index].name);
                                           // boxPlaylistVideo.add(PlayListVideos(
                                           //     path:
                                           //         widget.pathList[widget.index],
@@ -365,19 +367,34 @@ class _CustomListTileVideosState extends State<CustomListTileVideos> {
                                           print(
                                               'path ${widget.pathList[widget.index]} Addeddd to ${_playListNames[index].name}');
                                         },
-                                        child: ListTile(
-                                          title: Text(
-                                            _playListNames[index]
-                                                .name
-                                                .toString(),
-                                            style: const TextStyle(
-                                              fontFamily: 'Poppins',
-                                              fontSize: 18,
-                                              fontWeight: FontWeight.w400,
+                                        child: Padding(
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: 12, vertical: 5),
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                              color: Color.fromARGB(
+                                                  255, 205, 224, 255),
+                                            ),
+                                            child: ListTile(
+                                              title: Text(
+                                                _playListNames[index]
+                                                    .name
+                                                    .toString(),
+                                                style:  TextStyle(
+                                                  color: Colors.black.withOpacity(0.8),
+                                                  fontFamily: 'Poppins',
+                                                  fontSize: 18,
+                                                  fontWeight: FontWeight.w400,
+                                                ),
+                                              ),
+                                              leading: Icon(
+                                                MyFlutterApp.video_library,
+                                                color: Color(0xFF100374),
+                                              ),
                                             ),
                                           ),
-                                          leading: const Icon(
-                                              MyFlutterApp.video_library),
                                         ),
                                       );
                               },

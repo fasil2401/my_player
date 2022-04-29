@@ -124,11 +124,7 @@ class _PlayListScreenInnerState extends State<PlayListScreenInner> {
                       leading: const CircleAvatar(
                         backgroundColor: Color(0xFF100374),
                         radius: 30,
-                        child: Center(
-                          child: Icon(
-                            MyFlutterApp.play,
-                          ),
-                        ),
+                        backgroundImage: AssetImage('assets/images/icon.png'),
                       ),
                     ),
                   );
