@@ -49,7 +49,7 @@ class _PlayListScreenInnerState extends State<PlayListScreenInner> {
         padding: const EdgeInsets.only(top: 15),
         child: ListView.separated(
           separatorBuilder: (context, index) {
-            return SizedBox(
+            return const SizedBox(
               height: 10,
             );
           },

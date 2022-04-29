@@ -60,6 +60,7 @@ class _PlayListScreenState extends State<PlayListScreen> {
           return Stack(
             children: [
               Container(
+                 margin:const EdgeInsets.only(top: 8),
                 height: MediaQuery.of(context).size.height * 0.8,
                 child: ListView.builder(
                   itemCount: _playListNames.length,
@@ -81,11 +82,12 @@ class _PlayListScreenState extends State<PlayListScreen> {
                               confirmation(context, _playListNames, index);
                             },
                             child: Padding(
-                              padding:  EdgeInsets.symmetric(horizontal: 12, vertical: 5),
+                              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
                               child: Container(
+                               
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(10),
-                                  color: Color.fromARGB(255, 205, 224, 255),
+                                  color:const Color.fromARGB(255, 205, 224, 255),
                                 ),
                                 child: ListTile(
                                   title: Text(
@@ -97,7 +99,7 @@ class _PlayListScreenState extends State<PlayListScreen> {
                                       fontWeight: FontWeight.w600,
                                     ),
                                   ),
-                                  leading:  Icon(MyFlutterApp.video_library,
+                                  leading: const Icon(MyFlutterApp.video_library,
                                   color: Color(0xFF100374),
                                   ),
                                 ),
