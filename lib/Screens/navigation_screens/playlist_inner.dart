@@ -7,6 +7,7 @@ import 'package:my_player/Widgets/custom_list_tile_video.dart';
 import 'package:my_player/bottom_navigation/screenhome.dart';
 import 'package:my_player/icons/my_flutter_app_icons.dart';
 import 'package:my_player/model/model.dart';
+import 'package:sizer/sizer.dart';
 
 import '../../main.dart';
 
@@ -115,9 +116,9 @@ class _PlayListScreenInnerState extends State<PlayListScreenInner> {
                     child: ListTile(
                       title: Text(
                         _playList[index].split('/').last,
-                        style: const TextStyle(
+                        style:  TextStyle(
                           fontFamily: 'Poppins',
-                          fontSize: 18,
+                          fontSize: 14.sp,
                           fontWeight: FontWeight.w400,
                         ),
                       ),

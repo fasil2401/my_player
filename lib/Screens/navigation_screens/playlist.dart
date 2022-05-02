@@ -5,6 +5,7 @@ import 'package:my_player/Widgets/custom_appbar.dart';
 import 'package:my_player/Widgets/custom_list_tile_video.dart';
 import 'package:my_player/icons/my_flutter_app_icons.dart';
 import 'package:my_player/model/model.dart';
+import 'package:sizer/sizer.dart';
 
 import '../../main.dart';
 
@@ -135,12 +136,12 @@ class _PlayListScreenState extends State<PlayListScreen> {
                             context: context,
                             builder: (BuildContext ctx) {
                               return AlertDialog(
-                                title: const Center(
+                                title:  Center(
                                   child: Text(
                                     'Create Playlist',
                                     style: TextStyle(
                                       fontFamily: 'Poppins',
-                                      fontSize: 18,
+                                      fontSize: 14.sp,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
@@ -207,21 +208,21 @@ class _PlayListScreenState extends State<PlayListScreen> {
                                           },
                                           style: ElevatedButton.styleFrom(
                                             // primary: const Color(0xFF100374),
-                                            fixedSize: const Size(150, 50),
+                                            // fixedSize: const Size(150, 50),
                                             shape: RoundedRectangleBorder(
                                               borderRadius:
                                                   BorderRadius.circular(50),
                                             ),
                                           ),
-                                          child: Text(
-                                            'Create',
-                                            style: TextStyle(
-                                              fontFamily: 'Poppins',
-                                              fontSize: MediaQuery.of(context)
-                                                      .size
-                                                      .width *
-                                                  0.047,
-                                              fontWeight: FontWeight.bold,
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(5),
+                                            child: Text(
+                                              'Create',
+                                              style: TextStyle(
+                                                fontFamily: 'Poppins',
+                                                fontSize: 13.sp,
+                                                fontWeight: FontWeight.bold,
+                                              ),
                                             ),
                                           ),
                                         ),

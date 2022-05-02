@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:my_player/Screens/navigation_screens/video_list.dart';
 import 'package:my_player/icons/my_flutter_app_icons.dart';
+import 'package:sizer/sizer.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
 
 import '../main.dart';
@@ -141,7 +142,7 @@ class _CustomListTileFolderState extends State<CustomListTileFolder> {
                           maxLines: 3,
                           style: TextStyle(
                             fontFamily: "Poppins",
-                            fontSize: MediaQuery.of(context).size.width * 0.047,
+                            fontSize: 13.sp,
                           ),
                         ),
                       ),

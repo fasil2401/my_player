@@ -16,6 +16,7 @@ import 'package:my_player/popupmenu/data/menu_list.dart';
 import 'package:my_player/popupmenu/model/menu_item.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:sizer/sizer.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
 
 class CustomListTileVideos extends StatefulWidget {
@@ -129,7 +130,7 @@ class _CustomListTileVideosState extends State<CustomListTileVideos> {
                           maxLines: 2,
                           style: TextStyle(
                             fontFamily: "Poppins",
-                            fontSize: MediaQuery.of(context).size.width * 0.047,
+                            fontSize: 13.sp,
                           ),
                         ),
                       ),
@@ -324,12 +325,12 @@ class _CustomListTileVideosState extends State<CustomListTileVideos> {
                   children: [
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
+                      children:  [
                         Text(
                           'Playlists',
                           style: TextStyle(
                             fontFamily: 'Poppins',
-                            fontSize: 18,
+                            fontSize: 14.sp,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -385,7 +386,7 @@ class _CustomListTileVideosState extends State<CustomListTileVideos> {
                                                 style:  TextStyle(
                                                   color: Colors.black.withOpacity(0.8),
                                                   fontFamily: 'Poppins',
-                                                  fontSize: 18,
+                                                  fontSize: 13.sp,
                                                   fontWeight: FontWeight.w400,
                                                 ),
                                               ),

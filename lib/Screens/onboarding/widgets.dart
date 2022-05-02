@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sizer/sizer.dart';
 
 final List<Map<String, String>> splashData = [
   {
@@ -46,7 +47,7 @@ Text onBoardingText(BuildContext context, int index) {
     textAlign: TextAlign.center,
     style: TextStyle(
       fontFamily: "Poppins",
-      fontSize: MediaQuery.of(context).size.height * .03,
+      fontSize: 16.sp,
       color: const Color.fromARGB(255, 37, 37, 37),
       height: 1.5,
     ),

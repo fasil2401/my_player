@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sizer/sizer.dart';
 
 class SettingsTile extends StatelessWidget {
    SettingsTile({Key? key,required this.text,required this.leadicon, this.tailicon}) : super(key: key);
@@ -30,7 +31,7 @@ class SettingsTile extends StatelessWidget {
                 Text(
                   text,
                   style: TextStyle(fontFamily: "Poppins", 
-                  fontSize: MediaQuery.of(context).size.width * 0.047),
+                  fontSize: 14.sp),
                 )
               ],
             ),

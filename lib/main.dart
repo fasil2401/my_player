@@ -15,6 +15,7 @@ import 'package:my_player/provider/theme_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
+import 'package:sizer/sizer.dart';
 
 import 'Screens/navigation_screens/navigation.dart';
 
@@ -77,14 +78,16 @@ class MyApp extends StatelessWidget {
       builder: (context, _) {
         final themeProvider = Provider.of<ThemeProvider>(context);
 
-        return MaterialApp(
-          themeMode: themeProvider.themeMode,
-          debugShowCheckedModeBanner: false,
-          title: 'My Player',
-          theme: MyThemes.lightTheme,
-          darkTheme: MyThemes.darkTheme,
-          home: const SplashScreen(),
-        );
+        return Sizer(builder: (context, orientation, deviceType) {
+          return MaterialApp(
+            themeMode: themeProvider.themeMode,
+            debugShowCheckedModeBanner: false,
+            title: 'My Player',
+            theme: MyThemes.lightTheme,
+            darkTheme: MyThemes.darkTheme,
+            home: const SplashScreen(),
+          );
+        });
       },
     );
   }

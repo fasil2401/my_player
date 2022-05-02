@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sizer/sizer.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   const CustomAppBar({Key? key,required this.titletext,}) : super(key: key);
@@ -15,9 +16,9 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       // leading:const Icon(Icons.arrow_back),
       title:  Text(
         titletext,
-        style:const TextStyle(
+        style: TextStyle(
           fontFamily: 'Poppins',
-          fontSize: 24
+          fontSize: 16.sp
           ),
       ),
       centerTitle: true,
