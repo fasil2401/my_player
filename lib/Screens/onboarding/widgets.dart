@@ -14,7 +14,7 @@ final List<Map<String, String>> splashData = [
     "image": "assets/images/5870-removebg-preview (1).png"
   },
   {
-    "title": "One Stop Solution for your\nMultimedia Play",
+    "title": "Thank u for your patience\nPlease Wait ",
     "image": "assets/images/5870-removebg-preview (1).png"
   },
 
