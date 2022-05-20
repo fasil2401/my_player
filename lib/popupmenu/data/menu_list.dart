@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:my_player/icons/my_flutter_app_icons.dart';
-import 'package:my_player/popupmenu/model/menu_item.dart';
+
+import '../model/menu_item.dart';
+
 
 class MenuListItems {
-  static const List<MenuItem> itemFirst = [itemFavorite, itemShare, itemPLaylist];
+  static const List<MenuItems> itemFirst = [itemFavorite, itemShare, itemPLaylist];
 
   // static const List<MenuItem> itemSecond = [
   //   itemSignOut,
   // ];
 
-  static const itemFavorite = MenuItem(
+  static const itemFavorite = MenuItems(
     modeltext: 'Add to Favorites',
     icon: MyFlutterApp.heart_empty, 
     selectedIcon: MyFlutterApp.heart, 
@@ -17,13 +19,13 @@ class MenuListItems {
     
   );
   
-  static const itemPLaylist = MenuItem(
+  static const itemPLaylist = MenuItems(
     modeltext: 'Add to Playlist',
     icon: MyFlutterApp.video_library, 
     selectedIcon: MyFlutterApp.video_library,
     selectedtext: 'Add to Playlist',
   );
-   static const itemShare = MenuItem(
+   static const itemShare = MenuItems(
     modeltext: 'Share',
     icon: Icons.share, 
     selectedIcon: Icons.share, 

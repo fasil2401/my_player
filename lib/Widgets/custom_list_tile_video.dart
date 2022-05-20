@@ -154,7 +154,7 @@ class _CustomListTileVideosState extends State<CustomListTileVideos> {
                 children: [
                   Visibility(
                     visible: widget.trailicon,
-                    child: PopupMenuButton<MenuItem>(
+                    child: PopupMenuButton<MenuItems>(
                       color: const Color.fromARGB(242, 237, 241, 250),
                       shape: const RoundedRectangleBorder(
                           side: BorderSide(width: 1, color: Colors.grey),
@@ -175,7 +175,7 @@ class _CustomListTileVideosState extends State<CustomListTileVideos> {
     );
   }
 
-  PopupMenuItem<MenuItem> buildItem(MenuItem item) => PopupMenuItem<MenuItem>(
+  PopupMenuItem<MenuItems> buildItem(MenuItems item) => PopupMenuItem<MenuItems>(
         value: item,
         child: Row(
           children: [
@@ -194,7 +194,7 @@ class _CustomListTileVideosState extends State<CustomListTileVideos> {
         ),
       );
 
-  Future<void> onSelected(BuildContext context, MenuItem item) async {
+  Future<void> onSelected(BuildContext context, MenuItems item) async {
     switch (item) {
       case MenuListItems.itemFavorite:
         if (widget.isFavorite == true) {
