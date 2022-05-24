@@ -39,7 +39,6 @@ class PlayList extends HiveObject {
 class PlayListVideos extends HiveObject {
   @HiveField(0)
   String id;
-
   @HiveField(1)
   String path;
   PlayListVideos({required this.path, required this.id,});

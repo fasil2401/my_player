@@ -5,7 +5,7 @@ import 'package:flutter/services.dart';
 class SearchFilesInStorage {
   static const _platform = MethodChannel('search_files_in_storage/search');
 
-  static void searchInStorage(
+ static void searchInStorage(
     List<String> query,
     void Function(List<String>) onSuccess,
     void Function(String) onError,
@@ -22,4 +22,5 @@ class SearchFilesInStorage {
       },
     );
   }
+
 }

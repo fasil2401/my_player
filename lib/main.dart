@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:my_player/Screens/navigation_screens/all_videos.dart';
@@ -10,6 +11,7 @@ import 'package:my_player/Screens/navigation_screens/settings.dart';
 import 'package:my_player/Screens/player_screen/palyer.dart';
 import 'package:my_player/Screens/splash/splash.dart';
 import 'package:flutter/services.dart';
+import 'package:my_player/bottom_navigation/screenhome.dart';
 import 'package:my_player/model/model.dart';
 import 'package:my_player/provider/theme_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -18,6 +20,8 @@ import 'package:path_provider/path_provider.dart' as path_provider;
 import 'package:sizer/sizer.dart';
 
 import 'Screens/navigation_screens/navigation.dart';
+import 'Screens/navigation_screens/playlist.dart';
+import 'Screens/navigation_screens/playlist_inner.dart';
 
 const first_time = 'UserLogedIn';
 List<String> pathListMain = [];
@@ -79,13 +83,25 @@ class MyApp extends StatelessWidget {
         final themeProvider = Provider.of<ThemeProvider>(context);
 
         return Sizer(builder: (context, orientation, deviceType) {
-          return MaterialApp(
+          return GetMaterialApp(
             themeMode: themeProvider.themeMode,
             debugShowCheckedModeBanner: false,
             title: 'My Player',
             theme: MyThemes.lightTheme,
             darkTheme: MyThemes.darkTheme,
-            home: const SplashScreen(),
+            
+            initialRoute: '/',
+            getPages: [
+              GetPage(name: '/', page:() =>const SplashScreen()),
+              GetPage(name: '/onboarding', page:() =>const OnBoardingScreen()),
+              GetPage(name: '/home', page:() => ScreenHome(isSatrting: 'yes',)),
+              GetPage(name: '/fvorites', page:() => FavoriteVideoList()),
+              GetPage(name: '/floder', page:() => FolderScreen()),
+              GetPage(name: '/video', page:() => VideoList(pathList: [],folderName: '',)),
+              GetPage(name: '/playlist', page:() => PlayListScreen()),
+              GetPage(name: '/playlistVideos', page:() => PlayListScreenInner(name: '',)),
+              GetPage(name: '/settings', page:() =>const SettingsScreen()),
+            ],
           );
         });
       },

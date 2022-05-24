@@ -105,8 +105,9 @@ class MainActivity: FlutterActivity() {
                         query.forEach { extension->
                            if( path.endsWith(extension))
                            {
-                               foundList.add(path);
+                               foundList.add(path);                              
                            }
+
                         }
                     }
                 }
@@ -114,4 +115,31 @@ class MainActivity: FlutterActivity() {
         }
         return  foundList
     }
+
+    // private fun listFiles(directory: File,query:List<String>):String {
+    //     var foundList : String
+        
+    //     val files = directory.listFiles()
+    //     if (files != null) {
+    //         for (file in files) {
+    //             if (file != null) {
+    //                 if (file.isDirectory) {
+    //                     foundList.addAll( listFiles(file,query))
+    //                 } else {
+    //                     var path = file.absolutePath;
+    //                     Log.w("FILE_CHECKING",path + "\n")
+    //                     query.forEach { extension->
+    //                        if( path.endsWith(extension))
+    //                        {
+    //                            foundList = path;
+    //                            return foundList;
+    //                        }
+
+    //                     }
+    //                 }
+    //             }
+    //         }
+    //     }
+    //     return  foundList
+    // }
     }
