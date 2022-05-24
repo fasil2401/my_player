@@ -1,20 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:my_player/Widgets/custom_appbar.dart';
 import 'package:my_player/Widgets/custom_list_tile_folder.dart';
+import 'package:my_player/controllers/video_controller/video_controller.dart';
 import 'package:my_player/main.dart';
 import 'package:my_player/model/model.dart';
 import 'package:my_player/provider/search_files.dart';
 
-class FolderScreen extends StatefulWidget {
+class FolderScreen extends StatelessWidget {
   FolderScreen({Key? key}) : super(key: key);
 
-  @override
-  State<FolderScreen> createState() => _FolderScreenState();
-}
 
-class _FolderScreenState extends State<FolderScreen> {
   List<String> _pathList = [];
   List<String> folderName = [];
   List<String> folderNameFinal = [];
@@ -98,23 +96,77 @@ class _FolderScreenState extends State<FolderScreen> {
 //       (error) {},
 //     );
 //   }
+
+
+
+
+
+//start of old=================
+
+
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: const CustomAppBar(
+//         titletext: 'Folder',
+//       ),
+//       body: ValueListenableBuilder(
+//         valueListenable: boxVideos.listenable(),
+//         builder: (BuildContext context, Box<Videos> value, Widget? child) {
+//           List<Videos> videoPaths = value.values.toList();
+//           print('ivde aanooov  ${videoPaths}');
+//           for (var i = 0; i < videoPaths.length; i++) {
+//             // List<String> pathall = videoPaths[i].paths;
+
+//             _pathList.add(videoPaths[i].paths);
+//             List<String> folder = videoPaths[i].paths.split('/').toList();
+//             String name = folder[folder.length - 2];
+//             folderName.add(name);
+//           }
+//           folderNameFinal = folderName.toSet().toList();
+//           folderNameFinal.remove('0');
+
+//           return ListView.builder(
+//             itemCount: folderNameFinal.length,
+//             itemBuilder: (context, index) {
+//               return CustomListTileFolder(
+//                 subtite: false,
+//                 trailicon: false,
+//                 index: index,
+//                 text: folderNameFinal[index],
+//                 folderName: folderNameFinal[index],
+//                 pathList: _pathList,
+//               );
+//             },
+//           );
+//         },
+//       ),
+//     );
+//   }
+// }
+// ==============end of old
+
+
 @override
-  void dispose() {
-    
-    // TODO: implement dispose
-    super.dispose();
-  }
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const CustomAppBar(
         titletext: 'Folder',
       ),
-      body: ValueListenableBuilder(
-        valueListenable: boxVideos.listenable(),
-        builder: (BuildContext context, Box<Videos> value, Widget? child) {
-          List<Videos> videoPaths = value.values.toList();
+      body: GetBuilder<VideoController>(
+        
+        builder: (cont) {
+          List<dynamic> videoPaths = cont.observableVideoBox.values.toList();
           print('ivde aanooov  ${videoPaths}');
+
+
+          // videoPaths.forEach((element) {
+          //    _pathList.add(element.paths);
+          //    List<String> folder = element.paths.split('/').toList();
+          //     String name = folder[folder.length - 2];
+          //     folderName.add(name);
+          //  });
           for (var i = 0; i < videoPaths.length; i++) {
             // List<String> pathall = videoPaths[i].paths;
 
@@ -129,6 +181,7 @@ class _FolderScreenState extends State<FolderScreen> {
           return ListView.builder(
             itemCount: folderNameFinal.length,
             itemBuilder: (context, index) {
+              print('name finalll====$folderNameFinal');
               return CustomListTileFolder(
                 subtite: false,
                 trailicon: false,

@@ -44,36 +44,36 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
   //   }
   // }
 
-  Future getFiles() async {
-    // await Permission.storage.request();
-    final value = '.mp4,.mkv,.webm'
-        // final value = '.mp4'
-        .trim()
-        .replaceAll(' ', '')
-        .split(',');
-    if (value.isEmpty) {
-      return;
-    }
-    SearchFilesInStorage.searchInStorage(
-      value,
-      (List<String> data) {
-        _pathList.clear();
-        // print(data);
-        setState(() {
-          _pathList.addAll(data);
-          // for (var i = 0; i < _pathList.length; i++) {
-          //   List<String> folder = _pathList[i].split('/').toList();
-          //   String name = folder[folder.length - 2];
-          //   //  folderName.add(name);
-          // }
-          // folderNameFinal = folderName.toSet().toList();
-          // folderNameFinal.remove('0');
-          // pathListMain= _pathList;
-        });
-      },
-      (error) {},
-    );
-  }
+  // Future getFiles() async {
+  //   // await Permission.storage.request();
+  //   final value = '.mp4,.mkv,.webm'
+  //       // final value = '.mp4'
+  //       .trim()
+  //       .replaceAll(' ', '')
+  //       .split(',');
+  //   if (value.isEmpty) {
+  //     return;
+  //   }
+  //   SearchFilesInStorage.searchInStorage(
+  //     value,
+  //     (List<String> data) {
+  //       _pathList.clear();
+  //       // print(data);
+  //       setState(() {
+  //         _pathList.addAll(data);
+  //         // for (var i = 0; i < _pathList.length; i++) {
+  //         //   List<String> folder = _pathList[i].split('/').toList();
+  //         //   String name = folder[folder.length - 2];
+  //         //   //  folderName.add(name);
+  //         // }
+  //         // folderNameFinal = folderName.toSet().toList();
+  //         // folderNameFinal.remove('0');
+  //         // pathListMain= _pathList;
+  //       });
+  //     },
+  //     (error) {},
+  //   );
+  // }
 
   final _controller = PageController();
   int _currentPage = 0;

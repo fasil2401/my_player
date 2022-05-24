@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:hive_flutter/adapters.dart';
+import 'package:my_player/Repository/playlist_repository/playlist_repository.dart';
 import 'package:my_player/Screens/navigation_screens/playlist_inner.dart';
 import 'package:my_player/Widgets/custom_appbar.dart';
 import 'package:my_player/Widgets/custom_list_tile_video.dart';
+import 'package:my_player/controllers/Playlist_controller/playlist_controller.dart';
 import 'package:my_player/icons/my_flutter_app_icons.dart';
 import 'package:my_player/model/model.dart';
 import 'package:sizer/sizer.dart';
@@ -17,6 +20,8 @@ class PlayListScreen extends StatefulWidget {
 }
 
 class _PlayListScreenState extends State<PlayListScreen> {
+
+  final playlistControl = Get.put(PlaylistController());
   TextEditingController nameController = TextEditingController();
   List<String> _playList = [];
   List thumbs = [];
@@ -54,10 +59,68 @@ class _PlayListScreenState extends State<PlayListScreen> {
       appBar: const CustomAppBar(
         titletext: 'Playlist',
       ),
-      body: ValueListenableBuilder(
-        valueListenable: boxPlaylist.listenable(),
-        builder: (BuildContext context, Box<PlayList> value, Widget? child) {
-          List<PlayList> _playListNames = value.values.toList();
+      // body: ValueListenableBuilder(
+      //   valueListenable: boxPlaylist.listenable(),
+      //   builder: (BuildContext context, Box<PlayList> value, Widget? child) {
+      //     List<PlayList> _playListNames = value.values.toList();
+      //     return Stack(
+      //       children: [
+      //         Container(
+      //            margin:const EdgeInsets.only(top: 8),
+      //           height: MediaQuery.of(context).size.height * 0.8,
+      //           child: ListView.builder(
+      //             itemCount: _playListNames.length,
+      //             itemBuilder: (BuildContext context, int index) {
+      //               List<String> viewList = _playListNames[index].playList;
+
+      //               return _playListNames.isEmpty
+      //                   ? const Center(
+      //                       child: Text('dataaaaaaaaaaa'),
+      //                     )
+      //                   : GestureDetector(
+      //                       onTap: () {
+      //                         Navigator.of(context).push(MaterialPageRoute(
+      //                             builder: (ctx) => PlayListScreenInner(
+      //                                   name: _playListNames[index].name,
+      //                                 )));
+      //                       },
+      //                       onLongPress: () {
+      //                         confirmation(context, _playListNames, index);
+      //                       },
+      //                       child: Padding(
+      //                         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
+      //                         child: Container(
+                               
+      //                           decoration: BoxDecoration(
+      //                             borderRadius: BorderRadius.circular(10),
+      //                             color:const Color.fromARGB(255, 205, 224, 255),
+      //                           ),
+      //                           child: ListTile(
+                                  
+      //                             title: Text(
+      //                               _playListNames[index].name.toString(),
+      //                               style:  TextStyle(
+      //                                 color: Colors.black.withOpacity(0.8),
+      //                                 fontFamily: 'Poppins',
+      //                                 fontSize: 18,
+      //                                 fontWeight: FontWeight.w600,
+      //                               ),
+      //                             ),
+      //                             leading: const Icon(MyFlutterApp.video_library,
+      //                             // color: Color(0xFF100374),
+      //                             ),
+      //                           ),
+      //                         ),
+      //                       ),
+      //                     );
+      //             },
+      //           ),
+      //         ),
+      body: GetBuilder<PlaylistController>(
+        
+        builder: (cont) {
+          List<dynamic> _playListNames = cont.observablePlaylistBox.values.toList();
+          print(_playListNames);
           return Stack(
             children: [
               Container(
@@ -66,22 +129,18 @@ class _PlayListScreenState extends State<PlayListScreen> {
                 child: ListView.builder(
                   itemCount: _playListNames.length,
                   itemBuilder: (BuildContext context, int index) {
-                    List<String> viewList = _playListNames[index].playList;
-
-                    return _playListNames.isEmpty
-                        ? const Center(
-                            child: Text('dataaaaaaaaaaa'),
-                          )
-                        : GestureDetector(
+                    // List<String> viewList = _playListNames[index].playList;
+                  if(cont.observablePlaylistBox.length > 0){
+                    return GestureDetector(
                             onTap: () {
                               Navigator.of(context).push(MaterialPageRoute(
                                   builder: (ctx) => PlayListScreenInner(
                                         name: _playListNames[index].name,
                                       )));
                             },
-                            onLongPress: () {
-                              confirmation(context, _playListNames, index);
-                            },
+                            // onLongPress: () {
+                            //   confirmation(context, _playListNames, index);
+                            // },
                             child: Padding(
                               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
                               child: Container(
@@ -108,6 +167,13 @@ class _PlayListScreenState extends State<PlayListScreen> {
                               ),
                             ),
                           );
+                  }
+                  else{
+                    return Center(
+                child: Text("List is Empty"),
+              );
+                  }
+                     
                   },
                 ),
               ),
@@ -178,12 +244,13 @@ class _PlayListScreenState extends State<PlayListScreen> {
                                           onPressed: () async {
                                             if (nameController
                                                 .text.isNotEmpty) {
-                                              await Hive.openBox("pathlist");
+                                              // await Hive.openBox("pathlist");
                                               if (!nameCheck(
                                                   nameController.text) && nameController.text != '' && nameController.text != null) {
-                                                await boxPlaylist.add(PlayList(
-                                                    playList: _playList,
-                                                    name: nameController.text));
+                                                // await boxPlaylist.add(PlayList(
+                                                //     playList: _playList,
+                                                //     name: nameController.text));
+                                                await playlistControl.updatePlayList(item: PlayList(playList: _playList, name: nameController.text));
                                               } else {
                                                 ScaffoldMessenger.of(context)
                                                     .showSnackBar(const SnackBar(
@@ -289,7 +356,7 @@ class _PlayListScreenState extends State<PlayListScreen> {
   }
 
   bool nameCheck(String text) {
-    List<PlayList> _list = Hive.box<PlayList>(playlistBox).values.toList();
+    List<PlayList> _list = Hive.box<PlayList>(PlayListRepository.playlistBox).values.toList();
     bool check = false;
     for (int i = 0; i < _list.length; i++) {
       if (_list[i].name.trim() == text.trim()) {

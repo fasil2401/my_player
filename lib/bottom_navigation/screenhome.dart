@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:my_player/Screens/navigation_screens/all_videos.dart';
 import 'package:my_player/Screens/navigation_screens/favorite.dart';
@@ -7,6 +8,7 @@ import 'package:my_player/Screens/navigation_screens/folders.dart';
 import 'package:my_player/Screens/navigation_screens/playlist.dart';
 import 'package:my_player/Screens/navigation_screens/settings.dart';
 import 'package:my_player/bottom_navigation/widgets/bottomnavigation.dart';
+import 'package:my_player/controllers/video_controller/video_controller.dart';
 import 'package:my_player/main.dart';
 import 'package:my_player/model/model.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
@@ -28,6 +30,8 @@ class ScreenHome extends StatefulWidget {
 }
 
 class _ScreenHomeState extends State<ScreenHome> {
+
+  final controller = Get.put(VideoController());
   List<String> _pathList = [];
   List thumbs = [];
   var boxVideos = Hive.box<Videos>(videoBox);
@@ -52,7 +56,7 @@ class _ScreenHomeState extends State<ScreenHome> {
     }
     SearchFilesInStorage.searchInStorage(
       value,
-      (List<String> data) {
+      (List<String> data)async {
         _pathList.clear();
          _pathList.addAll(data);
 
@@ -80,16 +84,19 @@ class _ScreenHomeState extends State<ScreenHome> {
 
       // print(listBox[i]);
     }
-    SyncListThumb();
+    // SyncListThumb();
   }
 
   Future SyncList() async {
-    await boxVideos.clear();
+
+    
+    // await boxVideos.clear();
     for (var i = 0; i < _pathList.length; i++) {
-      boxVideos.put(
-          i, Videos(paths: _pathList[i], thumb: null, fav: false));
+      controller.updateVideo(index: i, path: Videos(paths: _pathList[i], thumb: null, fav: false));
+    //   boxVideos.put(
+    //       i, Videos(paths: _pathList[i], thumb: null, fav: false));
     }
-    getThumb();
+    // getThumb();
   }
    Future SyncListThumb () async {
     // await boxVideos.clear();
