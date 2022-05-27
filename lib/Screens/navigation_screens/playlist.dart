@@ -29,8 +29,8 @@ class _PlayListScreenState extends State<PlayListScreen> {
   bool isFavorite = true;
   var key;
 
-  var boxFavorites = Hive.box<Favorites>(favoriteBox);
-  var boxPlaylist = Hive.box<PlayList>(playlistBox);
+  // var boxFavorites = Hive.box<Favorites>(favoriteBox);
+  // var boxPlaylist = Hive.box<PlayList>(playlistBox);
 
   // List<Map<String, dynamic>> _items = [];
   // void refreshItems() {
@@ -138,9 +138,9 @@ class _PlayListScreenState extends State<PlayListScreen> {
                                         name: _playListNames[index].name,
                                       )));
                             },
-                            // onLongPress: () {
-                            //   confirmation(context, _playListNames, index);
-                            // },
+                            onLongPress: () {
+                              confirmation(context,  index);
+                            },
                             child: Padding(
                               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
                               child: Container(
@@ -318,7 +318,7 @@ class _PlayListScreenState extends State<PlayListScreen> {
   }
 
   Future<dynamic> confirmation(
-      BuildContext context, List<PlayList> _playListNames, int index) {
+      BuildContext context, int index) {
     return showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -333,7 +333,8 @@ class _PlayListScreenState extends State<PlayListScreen> {
                 child: const Text("No")),
             TextButton(
                 onPressed: () {
-                  deletePlaylist(_playListNames[index].name.toString());
+                  // deletePlaylist(_playListNames[index].name.toString());
+                  playlistControl.removePlalist(index: index);
                   Navigator.of(context).pop();
 
                   ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
@@ -349,11 +350,11 @@ class _PlayListScreenState extends State<PlayListScreen> {
     );
   }
 
-  void deletePlaylist(String text) async {
-    final videotoremove =
-        boxPlaylist.values.firstWhere((element) => element.name == text);
-    await videotoremove.delete();
-  }
+  // void deletePlaylist(String text) async {
+  //   final videotoremove =
+  //       boxPlaylist.values.firstWhere((element) => element.name == text);
+  //   await videotoremove.delete();
+  // }
 
   bool nameCheck(String text) {
     List<PlayList> _list = Hive.box<PlayList>(PlayListRepository.playlistBox).values.toList();

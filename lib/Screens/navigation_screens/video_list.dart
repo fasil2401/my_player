@@ -24,7 +24,7 @@ class VideoList extends StatelessWidget {
   List thumbs = [];
   bool? isFavorite;
   var key;
-  var boxVideos = Hive.box<Videos>(videoBox);
+  // var boxVideos = Hive.box<Videos>(videoBox);
 
   // @override
   // void initState() {

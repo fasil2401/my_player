@@ -181,7 +181,7 @@ class FolderScreen extends StatelessWidget {
           return ListView.builder(
             itemCount: folderNameFinal.length,
             itemBuilder: (context, index) {
-              print('name finalll====$folderNameFinal');
+              print('name finalll====$videoPaths');
               return CustomListTileFolder(
                 subtite: false,
                 trailicon: false,
