@@ -16,7 +16,7 @@ class FolderScreen extends StatelessWidget {
   List<String> _pathList = [];
   List<String> folderName = [];
   List<String> folderNameFinal = [];
-  var boxVideos = Hive.box<Videos>(videoBox);
+  // var boxVideos = Hive.box<Videos>(videoBox);
 
 //  @override
 //   void initState() {
