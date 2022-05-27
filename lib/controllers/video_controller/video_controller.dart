@@ -12,9 +12,14 @@ class VideoController extends GetxController{
 
 
     final Box observableVideoBox = VideoRepository.getVideoBox();
+    clearBox(){
+      observableVideoBox.clear();
+    }
 
     updateVideo({required int index, required Videos path}){
-    observableVideoBox.putAt(index, path);
+      
+
+    observableVideoBox.put( index,path);
     update();
   }
   // updateThumb({required int index, required Videos thumb}){

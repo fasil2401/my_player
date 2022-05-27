@@ -15,6 +15,10 @@ class PlaylistController extends GetxController{
     observablePlaylistBox.add(item);
     update();
   }
+  removePlalist({required int index}){
+    observablePlaylistBox.deleteAt(index);
+    update();
+  }
   // updateThumb({required int index, required Videos thumb}){
   //   observablePlaylistVideoBox.putAt(index, thumb);
   //   update();

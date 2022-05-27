@@ -34,7 +34,7 @@ class _ScreenHomeState extends State<ScreenHome> {
   final controller = Get.put(VideoController());
   List<String> _pathList = [];
   List thumbs = [];
-  var boxVideos = Hive.box<Videos>(videoBox);
+  // var boxVideos = Hive.box<Videos>(videoBox);
   final _pages = [
     FolderScreen(),
     // AllVideoList(),
@@ -89,25 +89,25 @@ class _ScreenHomeState extends State<ScreenHome> {
 
   Future SyncList() async {
 
-    
+    // controller.clearBox();
     // await boxVideos.clear();
     for (var i = 0; i < _pathList.length; i++) {
-      controller.updateVideo(index: i, path: Videos(paths: _pathList[i], thumb: null, fav: false));
+      controller.updateVideo( index: i,path: Videos(paths: _pathList[i], thumb: null, fav: false));
     //   boxVideos.put(
     //       i, Videos(paths: _pathList[i], thumb: null, fav: false));
     }
     // getThumb();
   }
-   Future SyncListThumb () async {
-    // await boxVideos.clear();
-    for (var i = 0; i < _pathList.length; i++) {
-      boxVideos.put(
-          i, Videos(paths: _pathList[i], thumb: thumbs[i], fav: false));
-    }
-  //  setState(() {
+  //  Future SyncListThumb () async {
+  //   // await boxVideos.clear();
+  //   for (var i = 0; i < _pathList.length; i++) {
+  //     boxVideos.put(
+  //         i, Videos(paths: _pathList[i], thumb: thumbs[i], fav: false));
+  //   }
+  // //  setState(() {
      
-  //  });
-  }
+  // //  });
+  // }
 
 
   @override
