@@ -10,7 +10,9 @@ import 'package:my_player/Screens/navigation_screens/all_videos.dart';
 import 'package:my_player/Screens/navigation_screens/favorite.dart';
 import 'package:my_player/Screens/player_screen/palyer.dart';
 import 'package:my_player/bottom_navigation/screenhome.dart';
+import 'package:my_player/controllers/Playlist_controller/playlist_controller.dart';
 import 'package:my_player/controllers/favotite_controller/favorite.dart';
+import 'package:my_player/controllers/playlist_video_controller/playlist_video_controller.dart';
 import 'package:my_player/icons/my_flutter_app_icons.dart';
 import 'package:my_player/main.dart';
 import 'package:my_player/model/model.dart';
@@ -50,13 +52,15 @@ class CustomListTileVideos extends StatelessWidget {
   final VoidCallback? voidCallback;
 
 
-  var boxVideos = Hive.box<Videos>(videoBox);
-  var boxFavorite = Hive.box<Favorites>(favoriteBox);
-  var boxPlaylist = Hive.box<PlayList>(playlistBox);
-  var boxPlaylistVideo = Hive.box<PlayListVideos>(playlistVideoBox);
+  // var boxVideos = Hive.box<Videos>(videoBox);
+  // var boxFavorite = Hive.box<Favorites>(favoriteBox);
+  // var boxPlaylist = Hive.box<PlayList>(playlistBox);
+  // var boxPlaylistVideo = Hive.box<PlayListVideos>(playlistVideoBox);
   List<String> _playListNames = [];
 
   final  favController = Get.put(FavoriteController());
+  final playlistControl = Get.put(PlaylistController());
+  final playlistvideoControl = Get.put(PlaylistVideoController());
 
   
   List<String> viewList = [];
@@ -338,13 +342,72 @@ class CustomListTileVideos extends StatelessWidget {
                       height: 10,
                     ),
                     Expanded(
-                      child: ValueListenableBuilder(
-                          valueListenable: boxPlaylist.listenable(),
-                          builder: (BuildContext context, Box<PlayList> value,
-                              Widget? child) {
-                            List<PlayList> _playListNames =
-                                value.values.toList();
-                            return ListView.builder(
+                      // child: ValueListenableBuilder(
+                      //     valueListenable: boxPlaylist.listenable(),
+                      //     builder: (BuildContext context, Box<PlayList> value,
+                      //         Widget? child) {
+                      //       List<PlayList> _playListNames =
+                      //           value.values.toList();
+                      //       return ListView.builder(
+                      //         itemCount: _playListNames.length,
+                      //         itemBuilder: (BuildContext context, int index) {
+                      //           return _playListNames.isEmpty
+                      //               ? const Center(
+                      //                   child: Text('data'),
+                      //                 )
+                      //               : InkWell(
+                      //                   onTap: () {
+                      //                     checking(
+                      //                         pathList[index],
+                      //                         _playListNames[index].name);
+                      //                     // boxPlaylistVideo.add(PlayListVideos(
+                      //                     //     path:
+                      //                     //         pathList[widget.index],
+                      //                     //     id: _playListNames[index].name));
+                      //                     // addToPlaylist(_playListNames[index].name);
+                      //                     //  _playListNames[index].playList.add(widget.pathList[widget.index]);
+                      //                     Navigator.of(context).pop();
+                      //                     print(
+                      //                         'path ${pathList[index]} Addeddd to ${_playListNames[index].name}');
+                      //                   },
+                      //                   child: Padding(
+                      //                     padding: EdgeInsets.symmetric(
+                      //                         horizontal: 12, vertical: 5),
+                      //                     child: Container(
+                      //                       decoration: BoxDecoration(
+                      //                         borderRadius:
+                      //                             BorderRadius.circular(10),
+                      //                         color: Color.fromARGB(
+                      //                             255, 205, 224, 255),
+                      //                       ),
+                      //                       child: ListTile(
+                      //                         title: Text(
+                      //                           _playListNames[index]
+                      //                               .name
+                      //                               .toString(),
+                      //                           style:  TextStyle(
+                      //                             color: Colors.black.withOpacity(0.8),
+                      //                             fontFamily: 'Poppins',
+                      //                             fontSize: 13.sp,
+                      //                             fontWeight: FontWeight.w400,
+                      //                           ),
+                      //                         ),
+                      //                         leading: Icon(
+                      //                           MyFlutterApp.video_library,
+                      //                           color: Color(0xFF100374),
+                      //                         ),
+                      //                       ),
+                      //                     ),
+                      //                   ),
+                      //                 );
+                      //         },
+                      //       );
+                      //     }),
+
+                      child: GetBuilder<PlaylistController>(
+                        builder: (cont){
+                          List<dynamic> _playListNames = cont.observablePlaylistBox.values.toList();
+                                  return ListView.builder(
                               itemCount: _playListNames.length,
                               itemBuilder: (BuildContext context, int index) {
                                 return _playListNames.isEmpty
@@ -353,9 +416,10 @@ class CustomListTileVideos extends StatelessWidget {
                                       )
                                     : InkWell(
                                         onTap: () {
-                                          checking(
-                                              pathList[index],
-                                              _playListNames[index].name);
+                                          playlistvideoControl.updatePlayListVideo(item: PlayListVideos(path: path, id: _playListNames[index].name), playlist:  _playListNames[index].name, path: path);
+                                          // checking(
+                                          //     pathList[index],
+                                          //     _playListNames[index].name);
                                           // boxPlaylistVideo.add(PlayListVideos(
                                           //     path:
                                           //         pathList[widget.index],
@@ -396,9 +460,7 @@ class CustomListTileVideos extends StatelessWidget {
                                           ),
                                         ),
                                       );
-                              },
-                            );
-                          }),
+                        });})
                     )
                   ],
                 ),
@@ -416,31 +478,31 @@ class CustomListTileVideos extends StatelessWidget {
     }
   }
 
-  void checking(String path, String id) {
-    List<String> videolist = [];
-    List<PlayListVideos> _listplayVideo =
-        Hive.box<PlayListVideos>(playlistVideoBox).values.toList();
-    for (var i = 0; i < _listplayVideo.length; i++) {
-      videolist.add(_listplayVideo[i].path);
-    }
-    if (!videolist.contains(path)) {
-      boxPlaylistVideo.add(PlayListVideos(path: path, id: id));
-    } else {
-      // ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-      //     duration: Duration(seconds: 1),
-      //     behavior: SnackBarBehavior.floating,
-      //     margin: EdgeInsets.only(bottom: 70.0),
-      //     content: Text("Already in list")));
-    }
-  }
+  // void checking(String path, String id) {
+  //   List<String> videolist = [];
+  //   List<PlayListVideos> _listplayVideo =
+  //       Hive.box<PlayListVideos>(playlistVideoBox).values.toList();
+  //   for (var i = 0; i < _listplayVideo.length; i++) {
+  //     videolist.add(_listplayVideo[i].path);
+  //   }
+  //   if (!videolist.contains(path)) {
+  //     boxPlaylistVideo.add(PlayListVideos(path: path, id: id));
+  //   } else {
+  //     // ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+  //     //     duration: Duration(seconds: 1),
+  //     //     behavior: SnackBarBehavior.floating,
+  //     //     margin: EdgeInsets.only(bottom: 70.0),
+  //     //     content: Text("Already in list")));
+  //   }
+  // }
 
-  void deleteFavorites() async {
-    // await boxFavorite.delete(widget.Customkey);
-    // final userToDelete =
-    // await _userBox.values.firstWhere((element) => element.id == id);
-    // await userToDelete.delete();
-    final videotoremove = boxFavorite.values.firstWhere(
-        (element) => element.favorite == pathList[index]);
-    await videotoremove.delete();
-  }
+  // void deleteFavorites() async {
+  //   // await boxFavorite.delete(widget.Customkey);
+  //   // final userToDelete =
+  //   // await _userBox.values.firstWhere((element) => element.id == id);
+  //   // await userToDelete.delete();
+  //   final videotoremove = boxFavorite.values.firstWhere(
+  //       (element) => element.favorite == pathList[index]);
+  //   await videotoremove.delete();
+  // }
 }
