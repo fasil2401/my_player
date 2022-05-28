@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:my_player/Screens/navigation_screens/playlist.dart';
@@ -15,30 +16,27 @@ import '../../main.dart';
 
 class PlayListScreenInner extends StatelessWidget {
   String name;
-  List<String> paths = [];
 
   PlayListScreenInner({
     Key? key,
     required this.name,
   }) : super(key: key);
 
+  List<String> paths = [];
+
+  final playlistvideoControl = Get.put(PlaylistVideoController());
 
   TextEditingController nameController = TextEditingController();
+
  final List<PlayListVideos> _playList = [];
+
  final List<String> _paths =[];
 
   bool isFavorite = true;
-  var key;
-  // var boxPlaylist = Hive.box<PlayList>(playlistBox);
-  // var boxPlaylistVideo = Hive.box<PlayListVideos>(playlistVideoBox);
-  // @override
-  // void initState() {
-  //   deleteSame();
-  //   getVideos();
-  //   // TODO: implement initState
-  //   super.initState();
-  // }
 
+  var key;
+
+  // var boxPlaylist = Hive.box<PlayList>(playlistBox);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -106,13 +104,16 @@ class PlayListScreenInner extends StatelessWidget {
                                         //             name: name),
                                         //   ),
                                         // );
+                                        playlistvideoControl.removePlaylistVideo(id: name, path: _paths[index]);  
+                                        Navigator.pop(context);
+                                        playlistvideoControl.update();
                                         ScaffoldMessenger.of(context).showSnackBar(
                                           const SnackBar(
                                             duration: Duration(seconds: 1),
                                             behavior: SnackBarBehavior.floating,
-                                            margin: EdgeInsets.only(
-                                              bottom: 80.0,
-                                            ),
+                                            // margin: EdgeInsets.only(
+                                            //   bottom: 80.0,
+                                            // ),
                                             content: Text(
                                               "Removed Successfully",
                                             ),
@@ -150,46 +151,4 @@ class PlayListScreenInner extends StatelessWidget {
       ),
     );
   }
-//  void deleteSame() {
-//    List<String> playlistvideo =[];
-//    List<String> videolist =[];
-//    List<PlayListVideos> _listFav = Hive.box<PlayListVideos>(playlistVideoBox).values.toList();
-//    List<Videos> _listVideo = Hive.box<Videos>(videoBox).values.toList();
-//    for (var i = 0; i < _listFav.length; i++) {
-//     playlistvideo.add(_listFav[i].path);
-//    }
-//    for (var i = 0; i < _listVideo.length; i++) {
-//      videolist.add(_listVideo[i].paths);
-//    }
-//    playlistvideo.forEach((element) { if (!videolist.contains(element)){
-//      deletevideo(element);
-//    }});
-//  }
-//   void deletevideo(String text) async {
-//     // await boxFavorite.delete(widget.Customkey);
-//     // final userToDelete =
-//     // await _userBox.values.firstWhere((element) => element.id == id);
-//     // await userToDelete.delete();
-//     final videotoremove = boxPlaylistVideo.values.firstWhere(
-//         (element) => element.path == text
-//         );
-//     await videotoremove.delete();
-    
-//   }
-  // void getVideos() async {
-  //   List<PlayListVideos> _list =
-  //       Hive.box<PlayListVideos>(playlistVideoBox).values.toList();
-  //   for (var i = 0; i < _list.length; i++) {
-  //     if (_list[i].id.trim() == widget.name.trim()) {
-  //       _playList.add(_list[i].path);
-  //     }
-  //   }
-  // }
-
-  // void deletePlaylistVideo(String thispath) async {
-  //   final videotoremove = boxPlaylistVideo.values
-  //       .firstWhere((element) => element.path == thispath);
-  //   await videotoremove.delete();
-  //   getVideos();
-  // }
 }
