@@ -25,7 +25,20 @@ class PlaylistVideoController extends GetxController {
     }
     update();
   }
-  
+  removePlaylistVideo({required String id , required String path}){
+    List<PlayListVideos> currentlist = [];
+    List<dynamic> alllist = observablePlaylistVideoBox.values.toList();
+    alllist.forEach((element) {
+      if(element.id == id){
+        currentlist.add(element);
+      }
+     });
+     final itemToRemove = currentlist.firstWhere((element) => element.path == path);
+     itemToRemove.delete();
+    
+     update();
+      Get.snackbar('', 'Reomoved', snackPosition: SnackPosition.TOP);
+  }
 
 
   // updateThumb({required int index, required Videos thumb}){
