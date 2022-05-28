@@ -142,6 +142,7 @@ class VideoList extends StatelessWidget {
             itemCount: _pathList.length,
             itemBuilder: (BuildContext context, int index) {
               return CustomListTileVideos(
+                path: _pathList[index],
                 subtite: false,
                 trailicon: true,
                 index: index,

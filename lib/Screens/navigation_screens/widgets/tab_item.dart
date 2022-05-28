@@ -21,7 +21,7 @@ Map<TabItem, IconData> tabIcon = {
 };
 Map<TabItem, Widget> roots = {
   TabItem.folder: FolderScreen(),
-  TabItem.allVideos: AllVideoList(),
+  // TabItem.allVideos: AllVideoList(),
   TabItem.favorite: FavoriteVideoList(),
   TabItem.settings: const SettingsScreen(),
 };
